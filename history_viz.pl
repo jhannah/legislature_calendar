@@ -49,6 +49,7 @@ foreach my $bill_id (sort keys %$history_per_bill) {
         when (/Approved by Governor/) { print "A"; $dots = 0; }
         when (/Returned by Governor/) { print "R" }
         when (/President\/Speaker signed/) { print "S"; $dots = 0; }
+        when (/Bill withdrawn/) { print "W"; $dots = 0; }
         default { print "x" }
       }
     } else {
