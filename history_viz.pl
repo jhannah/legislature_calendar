@@ -26,7 +26,15 @@ while (my $row = $csv->getline($fh)) {
   my $bill_id = $row->[0];
   my $date = $row->[1];
   $dates_list{$date} = 1;
-  $history_per_bill->{$bill_id}->{$date} = $row->[4];
+  # Gah... multiple things on same day cause problems for simply overwriting...
+  # Make the more important ones stick.
+  my $current = $history_per_bill->{$bill_id}->{$date} // '';
+  if ($current =~ /(Date of introduction|signed)/) {
+    # Don't overwrite.
+  } else {
+    # Overwrite
+    $history_per_bill->{$bill_id}->{$date} = $row->[4];
+  }
 }
 
 print_header();
@@ -37,23 +45,19 @@ foreach my $bill_id (sort keys %$history_per_bill) {
     $bills->{$bill_id}->{state_link},
     $bills->{$bill_id}->{bill_number},
   );
-  my $dots = 1;
+  my $dots = "&nbsp;";
   foreach my $date (sort keys %dates_list) {
-    my $action = $history_per_bill->{$bill_id}->{$date};
-    if ($action) {
-      for ($action) {
-        when (/Date of introduction/) { print "I" }
-        when (/Referred/) { print "r" }
-        when (/Notice/) { print "n" }
-        when (/Presented to Governor/) { print "P" }
-        when (/Approved by Governor/) { print "A"; $dots = 0; }
-        when (/Returned by Governor/) { print "R" }
-        when (/President\/Speaker signed/) { print "S"; $dots = 0; }
-        when (/Bill withdrawn/) { print "W"; $dots = 0; }
-        default { print "x" }
-      }
-    } else {
-      print $dots ? "." : " ";
+    my $action = $history_per_bill->{$bill_id}->{$date} // '';
+    for ($action) {
+      when (/Date of introduction/) { print "I"; $dots = "."; }
+      when (/Referred/) { print "r" }
+      when (/Notice/) { print "n" }
+      when (/Presented to Governor/) { print "P" }
+      when (/Approved by Governor/) { print "A"; $dots = "&nbsp;"; }
+      when (/Returned by Governor/) { print "R" }
+      when (/President\/Speaker signed/) { print "S"; $dots = "&nbsp;"; }
+      when (/Bill withdrawn/) { print "W"; $dots = "&nbsp;"; }
+      default { print $dots }
     }
   }
   print "</td>";
