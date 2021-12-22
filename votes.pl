@@ -3,7 +3,7 @@ use Modern::Perl;
 use Text::CSV_XS;
 no warnings "experimental";
 
-my ($people);
+my $people;
 
 my $csv = Text::CSV_XS->new ({ binary => 1, auto_diag => 1 });
 
@@ -26,11 +26,11 @@ foreach my $people_id (keys %$people) {
     defined $people->{$people_id}->{Nay}
   );   # Skip the committees
   printf("%-20s %3s %3s %3s %3s\n",
-    $people->{$people_id}->{name} // '',
-    $people->{$people_id}->{Yea}  // '',
-    $people->{$people_id}->{Nay}  // '',
-    $people->{$people_id}->{Absent}  // '',
-    $people->{$people_id}->{NV}  // '',
+    $people->{$people_id}->{name}   // '',
+    $people->{$people_id}->{Yea}    // '',
+    $people->{$people_id}->{Nay}    // '',
+    $people->{$people_id}->{Absent} // '',
+    $people->{$people_id}->{NV}     // '',
   );
 }
 
