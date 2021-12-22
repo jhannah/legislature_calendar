@@ -89,6 +89,9 @@ EOT
 sub print_footer {
   print <<EOT;
 </table>
+
+</br></br>
+<a href="https://github.com/jhannah/legislature_calendar">Source code</a>
 </body>
 </html>
 EOT
