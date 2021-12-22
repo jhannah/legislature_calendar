@@ -1,3 +1,12 @@
+# Jay hacking around with calendars
+
+Generating quick calendars from LegiScan CSV files. 
+
+Here's their READNE which I accidentally copied in here, but am 
+leaving for now because it's helpful anyway:
+
+--------------------------------
+
 # LegiScan Public Datasets
 
 ## CSV Datasets
