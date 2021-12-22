@@ -54,6 +54,7 @@ foreach my $bill_id (sort keys %$history_per_bill) {
     }
   }
   print "</td>";
+  printf('<td>%s</td>', $bills->{$bill_id}->{status_desc});
   printf('<td>%s <a href="%s">LegiScan</a></td>',
     $bills->{$bill_id}->{title},
     $bills->{$bill_id}->{url},
