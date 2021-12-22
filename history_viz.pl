@@ -49,14 +49,15 @@ foreach my $bill_id (sort keys %$history_per_bill) {
   foreach my $date (sort keys %dates_list) {
     my $action = $history_per_bill->{$bill_id}->{$date} // '';
     for ($action) {
-      when (/Date of introduction/) { print "I"; $dots = "."; }
+      when (/Date of introduction/) { print "I"; $dots = "." }
       when (/Referred/) { print "r" }
       when (/Notice/) { print "n" }
       when (/Presented to Governor/) { print "P" }
-      when (/Approved by Governor/) { print "A"; $dots = "&nbsp;"; }
+      when (/Approved by Governor/) { print "A"; $dots = "&nbsp;" }
       when (/Returned by Governor/) { print "R" }
-      when (/President\/Speaker signed/) { print "S"; $dots = "&nbsp;"; }
-      when (/Bill withdrawn/) { print "W"; $dots = "&nbsp;"; }
+      when (/President\/Speaker signed/) { print "S"; $dots = "&nbsp;" }
+      when (/Bill withdrawn/) { print "W"; $dots = "&nbsp;" }
+      when (/\w/) { print "x" } 
       default { print $dots }
     }
   }
