@@ -1,8 +1,12 @@
 # Jay hacking around with calendars
 
-Generating quick calendars from LegiScan CSV files. 
+Generating quick calendars from LegiScan CSV files.
 
-Here's their READNE which I accidentally copied in here, but am 
+   https://legiscan.com/NE/datasets
+   
+Sample HTML output: http://jays.net/tmp/j.html
+
+Here's their README which I accidentally copied in here, but am 
 leaving for now because it's helpful anyway:
 
 --------------------------------
