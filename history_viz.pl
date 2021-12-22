@@ -32,21 +32,23 @@ while (my $row = $csv->getline($fh)) {
 print_header();
 
 foreach my $bill_id (sort keys %$history_per_bill) {
+  #next unless ($bill_id eq "1395774");
   printf('<tr><td><a href="%s">%s</a></td> <td>',
     $bills->{$bill_id}->{state_link},
     $bills->{$bill_id}->{bill_number},
   );
   my $dots = 1;
-  foreach my $d (sort keys %dates_list) {
-    my $x = $history_per_bill->{$bill_id}->{$d};
-    if ($x) {
-      for ($x) {
+  foreach my $date (sort keys %dates_list) {
+    my $action = $history_per_bill->{$bill_id}->{$date};
+    if ($action) {
+      for ($action) {
         when (/Date of introduction/) { print "I" }
         when (/Referred/) { print "r" }
         when (/Notice/) { print "n" }
         when (/Presented to Governor/) { print "P" }
         when (/Approved by Governor/) { print "A"; $dots = 0; }
         when (/Returned by Governor/) { print "R" }
+        when (/President\/Speaker signed/) { print "S"; $dots = 0; }
         default { print "x" }
       }
     } else {
