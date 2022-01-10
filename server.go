@@ -27,9 +27,9 @@ type Bill struct {
 }
 
 func main() {
-	router := gin.Default()
-	router.LoadHTMLGlob("templates/*.tmpl")
-	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
+  router := gin.Default()
+  router.LoadHTMLGlob("templates/*.tmpl")
+  //router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
 
   db, err := gorm.Open(sqlite.Open("leg.sqlite3"), &gorm.Config{})
   if err != nil {
@@ -38,31 +38,31 @@ func main() {
   var bills []Bill
   result := db.Find(&bills)
 
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"Title": "Main website",
+  router.GET("/", func(c *gin.Context) {
+    c.HTML(http.StatusOK, "index.tmpl", gin.H{
+      "Title": "Main website",
       "Bills": bills,
       "RowsAffected": result.RowsAffected,
       "Error": result.Error,
-		})
-	})
+    })
+  })
 
-	router.GET("/init", func(c *gin.Context) {
+  router.GET("/init", func(c *gin.Context) {
     // Migrate the schema
     db.AutoMigrate(&Bill{})
 
     // Create
     db.Create(&Bill{ID: 1, SessionID: 1810, Number: "LB875", Status: "Introduced", LastActionDate: "2022-01-07", LastAction: "Date of introduction", Title: "Rename the Director-State Engineer for the Department of Transportation as the Director of Transportation for the Department of Transportation", URL: "https://legiscan.com/NE/bill/LB875/2021"})
 
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"Title": "Main website",
+    c.HTML(http.StatusOK, "index.tmpl", gin.H{
+      "Title": "Main website",
       "Bills": bills,
       "RowsAffected": result.RowsAffected,
       "Error": result.Error,
-		})
-	})
+    })
+  })
 
-	router.Run(":8080")
+  router.Run(":8080")
 }
 
 
