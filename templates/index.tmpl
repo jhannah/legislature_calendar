@@ -1,6 +1,23 @@
+<!DOCTYPE html>
 <html>
-	<h1>
-		{{ .title }}
-	</h1>
+<head>
+<style>
+  body { font-family: Courier; }
+  table td { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<h1>{{ .Title }}</h1>
+
+<table>
+{{ range .Bills }}
+  <tr><td>{{ .Title }}</td></tr>
+{{ end }}
+</table>
+
+</br></br>
+<a href="https://github.com/jhannah/legislature_calendar">Source code</a>
+</body>
 </html>
 
