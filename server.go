@@ -31,24 +31,28 @@ func main() {
 	router.LoadHTMLGlob("templates/*.tmpl")
 	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
 
+  db, err := gorm.Open(sqlite.Open("leg.sqlite3"), &gorm.Config{})
+  if err != nil {
+    panic("failed to connect database")
+  }
+  var bills []Bill
+  result := db.Find(&bills)
+
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"title": "Main website",
+			"Title": "Main website",
+      "Bills": bills,
+      "RowsAffected": result.RowsAffected,
+      "Error": result.Error,
 		})
 	})
 
 	router.GET("/init", func(c *gin.Context) {
-    db, err := gorm.Open(sqlite.Open("leg.sqlite3"), &gorm.Config{})
-    if err != nil {
-      panic("failed to connect database")
-    }
     // Migrate the schema
     db.AutoMigrate(&Bill{})
 
     // Create
     db.Create(&Bill{ID: 1, SessionID: 1810, Number: "LB875", Status: "Introduced", LastActionDate: "2022-01-07", LastAction: "Date of introduction", Title: "Rename the Director-State Engineer for the Department of Transportation as the Director of Transportation for the Department of Transportation", URL: "https://legiscan.com/NE/bill/LB875/2021"})
-    var bills []Bill
-    result := db.Find(&bills)
 
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"Title": "Main website",
