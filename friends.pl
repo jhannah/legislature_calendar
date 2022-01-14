@@ -34,15 +34,36 @@ foreach my $person (keys %$people) {
       my $other_vote  = $votes->{$other_person}->{$roll_call_id};
       next unless ($person_vote && $other_vote);
       if ($person_vote eq $other_vote) {
-        $friendship->{$person}->{$other_person} += 1;
+        $friendship->{$person}->{$other_person}->{agree} += 1;
         # say "$roll_call_id: $person $person_vote $other_person $other_vote +1 = " . $friendship->{$person}->{$other_person};
       } else {
-        $friendship->{$person}->{$other_person} -= 1;
+        $friendship->{$person}->{$other_person}->{disagree} += 1;
         # say "$roll_call_id: $person $person_vote $other_person $other_vote -1 = " . $friendship->{$person}->{$other_person};
       }
     }
   }
 }
+
+my %printed_already;
+foreach my $person (keys %$friendship) {
+  # next unless ($person == 18370);  # Justin Wayne
+  # say $people->{$person}->{name};
+  my $x = $friendship->{$person};
+  foreach my $other_person (sort { $x->{$b} <=> $x->{$a} } keys %$x) {
+    next if ($printed_already{ join ".", sort $person, $other_person });
+    printf("%3s %3s %s <-> %s\n",
+      $x->{$other_person}->{agree},
+      $x->{$other_person}->{disagree},
+      $people->{$person}->{name},
+      $people->{$other_person}->{name},
+    );
+    $printed_already{ join ".", sort $person, $other_person } = 1;
+  }
+}
+# ./friends.pl | sort -n -r
+
+
+__END__
 
 # Text output -- strongest friends to weakest
 my %printed_already;
@@ -62,7 +83,6 @@ foreach my $person (keys %$friendship) {
 }
 # ./friends.pl | sort -n -r
 
-__END__
 
 # Maybe we want a chord diagram?    ooof... probably not?  http://jays.net/tmp/friends.html
 # https://www.amcharts.com/demos/chord-diagram/
