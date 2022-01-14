@@ -26,7 +26,7 @@ while (my $row = $csv->getline($fh)) {
 }
 
 foreach my $person (keys %$people) {
-  next unless ($person == 18370);  # Justin Wayne
+  # next unless ($person == 18370);  # Justin Wayne
   foreach my $other_person (keys %$people) {
     next if ($person == $other_person); # ignore themselves
     foreach my $roll_call_id (keys %{$votes->{$other_person}}) {
@@ -44,28 +44,39 @@ foreach my $person (keys %$people) {
   }
 }
 
+# Text output -- strongest friends to weakest
+my %printed_already;
 foreach my $person (keys %$friendship) {
-  next unless ($person == 18370);  # Justin Wayne
+  # next unless ($person == 18370);  # Justin Wayne
+  # say $people->{$person}->{name};
   my $x = $friendship->{$person};
   foreach my $other_person (sort { $x->{$b} <=> $x->{$a} } keys %$x) {
-    printf("%s %s\n", $x->{$other_person}, $people->{$other_person}->{name});
+    next if ($printed_already{ join ".", sort $person, $other_person });
+    printf("%s %s <-> %s\n",
+      $x->{$other_person},
+      $people->{$person}->{name},
+      $people->{$other_person}->{name},
+    );
+    $printed_already{ join ".", sort $person, $other_person } = 1;
   }
 }
+# ./friends.pl | sort -n -r
 
 __END__
 
-say "Name                 Yea Nay Absent NotVoting";
-foreach my $people_id (keys %$people) {
-  next unless (
-    defined $people->{$people_id}->{Yea} ||
-    defined $people->{$people_id}->{Nay}
-  );   # Skip the committees
-  printf("%-20s %3s %3s %3s %3s\n",
-    $people->{$people_id}->{name}   // '',
-    $people->{$people_id}->{Yea}    // '',
-    $people->{$people_id}->{Nay}    // '',
-    $people->{$people_id}->{Absent} // '',
-    $people->{$people_id}->{NV}     // '',
-  );
+# Maybe we want a chord diagram?    ooof... probably not?  http://jays.net/tmp/friends.html
+# https://www.amcharts.com/demos/chord-diagram/
+foreach my $person (keys %$friendship) {
+  # next unless ($person == 18370);  # Justin Wayne
+  # say $people->{$person}->{name};
+  my $x = $friendship->{$person};
+  foreach my $other_person (sort { $x->{$b} <=> $x->{$a} } keys %$x) {
+    printf("  { source: '%s', target: '%s', value: %s },\n",
+      $people->{$person}->{name},
+      $people->{$other_person}->{name},
+      $x->{$other_person},
+    );
+  }
 }
+
 
