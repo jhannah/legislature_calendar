@@ -8,6 +8,17 @@
 </head>
 <body>
 
+{{ if .Username }}
+  {{ .Username }}
+  <a href="/logout">Logout</a>
+{{ else }}
+  <form action="/login" method="POST">
+    <input name="username" value="username">
+    <input name="password" value="password">
+    <input type="submit" value="Login">
+  </form>
+{{ end }}
+
 <h1>{{ .Title }}</h1>
 
 <table>

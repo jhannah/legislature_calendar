@@ -8,7 +8,9 @@ package main
 // http://localhost:8080
 
 import (
+	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
@@ -40,12 +42,35 @@ func main() {
 	result := db.Order("last_action_date desc").Find(&bills)
 
 	router.GET("/", func(c *gin.Context) {
+		username, err := c.Cookie("username")
+		if err != nil {
+			return
+		}
+
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"Username":     username,
 			"Title":        "Nebraska 2021-2022 Regular Session 107th Legislature",
 			"Bills":        bills,
 			"RowsAffected": result.RowsAffected,
 			"Error":        result.Error,
 		})
+	})
+
+	router.POST("/login", func(c *gin.Context) {
+		// https://chenyitian.gitbooks.io/gin-tutorials/content/docker/4.html
+		username := c.PostForm("username")
+		fmt.Println("JAY0", username)
+		//password := c.PostForm("password")
+		c.SetCookie("username", username, 3600, "", "", false, true)
+		// https://stackoverflow.com/questions/61970551/golang-gin-redirect-and-render-a-template-with-new-variables
+		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
+		c.Redirect(http.StatusFound, location.RequestURI())
+	})
+
+	router.GET("/logout", func(c *gin.Context) {
+		c.SetCookie("username", "", 3600, "", "", false, true)
+		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
+		c.Redirect(http.StatusFound, location.RequestURI())
 	})
 
 	router.GET("/init", func(c *gin.Context) {
