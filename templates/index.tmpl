@@ -12,7 +12,13 @@
 
 <table>
 {{ range .Bills }}
-  <tr><td>{{ .Title }}</td></tr>
+  <tr>
+    <td><a href="{{ .URL }}">{{ .Number }}</a></td>
+    <td>{{ .Status }}</td>
+    <td>{{ .LastActionDate }}</td>
+    <td>{{ .LastAction }}</td>
+    <td>{{ .Title }}</td>
+  </tr>
 {{ end }}
 </table>
 
