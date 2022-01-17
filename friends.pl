@@ -27,17 +27,21 @@ while (my $row = $csv->getline($fh)) {
 
 foreach my $person (keys %$people) {
   # next unless ($person == 18370);  # Justin Wayne
+  next unless ($person == 16611);   # Adam Morfeld
   foreach my $other_person (keys %$people) {
     next if ($person == $other_person); # ignore themselves
+    next unless ($other_person == 18640); # Lynne Walz
     foreach my $roll_call_id (keys %{$votes->{$other_person}}) {
       my $person_vote = $votes->{$person      }->{$roll_call_id};
       my $other_vote  = $votes->{$other_person}->{$roll_call_id};
       next unless ($person_vote && $other_vote);
       if ($person_vote eq $other_vote) {
         $friendship->{$person}->{$other_person}->{agree} += 1;
+        # say "$roll_call_id: $person $person_vote $other_person $other_vote +1";
         # say "$roll_call_id: $person $person_vote $other_person $other_vote +1 = " . $friendship->{$person}->{$other_person};
       } else {
         $friendship->{$person}->{$other_person}->{disagree} += 1;
+        say "$roll_call_id: $person $person_vote $other_person $other_vote -1";
         # say "$roll_call_id: $person $person_vote $other_person $other_vote -1 = " . $friendship->{$person}->{$other_person};
       }
     }
