@@ -28,8 +28,8 @@
     <tr>
       <td><a href="{{ .URL }}">{{ .Number }}</a></td>
       <td>
-        <a href="/watch/{{ .ID }}/Y">Y</a>
-        <a href="/watch/{{ .ID }}/N">N</a>
+        {{ if eq .Stance "Y" }} Y {{ else }} <a href="/watch/{{ .ID }}/Y">Y</a> {{ end }}
+        {{ if eq .Stance "N" }} N {{ else }} <a href="/watch/{{ .ID }}/N">N</a> {{ end }}
         <a href="/watch/{{ .ID }}/U">U</a>
       </td>
       <td>{{ .Status }}</td>

@@ -8,7 +8,6 @@ package main
 // http://localhost:8080
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -30,6 +29,18 @@ type Bill struct {
 	URL            string
 }
 
+type MyBill struct {
+	ID             int
+	SessionID      int
+	Number         string
+	Status         string
+	LastActionDate string
+	LastAction     string
+	Title          string
+	URL            string
+	Stance         string
+}
+
 type Watchlist struct {
 	gorm.Model
 	ID       int
@@ -48,25 +59,24 @@ func main() {
 		panic("failed to connect to database")
 	}
 	var allBills []Bill
-	result1 := db.Limit(5).Order("last_action_date desc").Find(&allBills)
-	fmt.Println("allBills", result1.Error, result1.RowsAffected)
+	// Add .Limit(5) to the front of the chain to see less data
+	result1 := db.Order("last_action_date desc").Find(&allBills)
 
 	router.GET("/", func(c *gin.Context) {
-		fmt.Println("JAY0")
 		username, _ := c.Cookie("username")
-		fmt.Println("JAY2")
-
-		var myBills []Bill
+		var myBills []MyBill
 		var result2 *gorm.DB
 		if username != "" {
-			result2 = db.Debug().Limit(5).Order("last_action_date desc").Joins(
+			// Add .Debug() to the front of the chain to see debug stuff :)
+			result2 = db.Order("last_action_date desc").Table("bills").Select("bills.*, watchlists.stance").Joins(
 				"JOIN watchlists on watchlists.bill_id = bills.id AND watchlists.username = ? AND watchlists.deleted_at IS NULL",
 				username,
 			).Find(&myBills)
-			fmt.Println("myBills", result1.Error, result1.RowsAffected)
 		}
-		fmt.Println("JAY10", result2)
-
+		// uhh... not sure how to make Go happy here (unused var, sometimes)
+		if result2 == nil {
+			result2 = nil
+		}
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"Username":      username,
 			"Title":         "Nebraska 2021-2022 Regular Session 107th Legislature",
@@ -88,12 +98,10 @@ func main() {
 			return
 		}
 		stance := c.Param("stance")
-		fmt.Println("JAY20", billID, stance)
-		if stance == "U" { // unwatch
-			var w Watchlist
-			db.Where("username = ? and bill_id = ?", username, intBillID).Find(&w)
-			db.Debug().Delete(&w)
-		} else {
+		var w Watchlist
+		db.Where("username = ? and bill_id = ?", username, intBillID).Find(&w)
+		db.Delete(&w)
+		if stance != "U" {
 			db.Create(&Watchlist{Username: username, BillID: intBillID, Stance: stance})
 		}
 		// db.Commit()
@@ -104,7 +112,6 @@ func main() {
 	router.POST("/login", func(c *gin.Context) {
 		// https://chenyitian.gitbooks.io/gin-tutorials/content/docker/4.html
 		username := c.PostForm("username")
-		fmt.Println("JAY0", username)
 		//password := c.PostForm("password")
 		c.SetCookie("username", username, 3600, "", "", false, true)
 		// https://stackoverflow.com/questions/61970551/golang-gin-redirect-and-render-a-template-with-new-variables
