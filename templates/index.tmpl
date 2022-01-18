@@ -22,9 +22,33 @@
 <h1>{{ .Title }}</h1>
 
 <table>
-{{ range .Bills }}
+{{ if .Username }}
+  <tr><td colspan=6>My Bills</td></tr>
+  {{ range .MyBills }}
+    <tr>
+      <td><a href="{{ .URL }}">{{ .Number }}</a></td>
+      <td>
+        <a href="/watch/{{ .ID }}/Y">Y</a>
+        <a href="/watch/{{ .ID }}/N">N</a>
+        <a href="/watch/{{ .ID }}/U">U</a>
+      </td>
+      <td>{{ .Status }}</td>
+      <td>{{ .LastActionDate }}</td>
+      <td>{{ .LastAction }}</td>
+      <td>{{ .Title }}</td>
+    </tr>
+  {{ end }}
+  <tr><td colspan=6>All Bills</td></tr>
+{{ end }}
+
+{{ range .AllBills }}
   <tr>
     <td><a href="{{ .URL }}">{{ .Number }}</a></td>
+    <td>
+      <a href="/watch/{{ .ID }}/Y">Y</a>
+      <a href="/watch/{{ .ID }}/N">N</a>
+      <a href="/watch/{{ .ID }}/W">W</a>
+    </td>
     <td>{{ .Status }}</td>
     <td>{{ .LastActionDate }}</td>
     <td>{{ .LastAction }}</td>

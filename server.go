@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
@@ -29,6 +30,14 @@ type Bill struct {
 	URL            string
 }
 
+type Watchlist struct {
+	gorm.Model
+	ID       int
+	Username string
+	BillID   int
+	Stance   string
+}
+
 func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.tmpl")
@@ -38,22 +47,58 @@ func main() {
 	if err != nil {
 		panic("failed to connect to database")
 	}
-	var bills []Bill
-	result := db.Order("last_action_date desc").Find(&bills)
+	var allBills []Bill
+	result1 := db.Limit(5).Order("last_action_date desc").Find(&allBills)
+	fmt.Println("allBills", result1.Error, result1.RowsAffected)
 
 	router.GET("/", func(c *gin.Context) {
-		username, err := c.Cookie("username")
-		if err != nil {
-			return
+		fmt.Println("JAY0")
+		username, _ := c.Cookie("username")
+		fmt.Println("JAY2")
+
+		var myBills []Bill
+		var result2 *gorm.DB
+		if username != "" {
+			result2 = db.Debug().Limit(5).Order("last_action_date desc").Joins(
+				"JOIN watchlists on watchlists.bill_id = bills.id AND watchlists.username = ? AND watchlists.deleted_at IS NULL",
+				username,
+			).Find(&myBills)
+			fmt.Println("myBills", result1.Error, result1.RowsAffected)
 		}
+		fmt.Println("JAY10", result2)
 
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"Username":     username,
-			"Title":        "Nebraska 2021-2022 Regular Session 107th Legislature",
-			"Bills":        bills,
-			"RowsAffected": result.RowsAffected,
-			"Error":        result.Error,
+			"Username":      username,
+			"Title":         "Nebraska 2021-2022 Regular Session 107th Legislature",
+			"AllBills":      allBills,
+			"MyBills":       myBills,
+			"RowsAffected1": result1.RowsAffected,
+			"Error1":        result1.Error,
+			//"RowsAffected2": result2.RowsAffected,
+			//"Error2":        result2.Error,
 		})
+	})
+
+	router.GET("/watch/:billID/:stance", func(c *gin.Context) {
+		username, _ := c.Cookie("username")
+		billID := c.Param("billID")
+		intBillID, err := strconv.Atoi(billID)
+		if err != nil {
+			c.Error(err)
+			return
+		}
+		stance := c.Param("stance")
+		fmt.Println("JAY20", billID, stance)
+		if stance == "U" { // unwatch
+			var w Watchlist
+			db.Where("username = ? and bill_id = ?", username, intBillID).Find(&w)
+			db.Debug().Delete(&w)
+		} else {
+			db.Create(&Watchlist{Username: username, BillID: intBillID, Stance: stance})
+		}
+		// db.Commit()
+		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
+		c.Redirect(http.StatusFound, location.RequestURI())
 	})
 
 	router.POST("/login", func(c *gin.Context) {
@@ -75,17 +120,13 @@ func main() {
 
 	router.GET("/init", func(c *gin.Context) {
 		// Migrate the schema
-		db.AutoMigrate(&Bill{})
+		db.AutoMigrate(&Bill{}, &Watchlist{})
 
 		// Create
-		db.Create(&Bill{ID: 1, SessionID: 1810, Number: "LB875", Status: "Introduced", LastActionDate: "2022-01-07", LastAction: "Date of introduction", Title: "Rename the Director-State Engineer for the Department of Transportation as the Director of Transportation for the Department of Transportation", URL: "https://legiscan.com/NE/bill/LB875/2021"})
+		// db.Create(&Bill{ID: 1, SessionID: 1810, Number: "LB875", Status: "Introduced", LastActionDate: "2022-01-07", LastAction: "Date of introduction", Title: "Rename the Director-State Engineer for the Department of Transportation as the Director of Transportation for the Department of Transportation", URL: "https://legiscan.com/NE/bill/LB875/2021"})
 
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"Title":        "Main website",
-			"Bills":        bills,
-			"RowsAffected": result.RowsAffected,
-			"Error":        result.Error,
-		})
+		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
+		c.Redirect(http.StatusFound, location.RequestURI())
 	})
 
 	router.Run(":8080")
