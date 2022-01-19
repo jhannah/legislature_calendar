@@ -43,10 +43,19 @@ type MyBill struct {
 
 type Watchlist struct {
 	gorm.Model
+	ID     int
+	UserID int
+	BillID int
+	Stance string
+}
+
+type User struct {
+	gorm.Model
 	ID       int
-	Username string
-	BillID   int
-	Stance   string
+	Password string
+	Name     string
+	Email    string
+	URL      string
 }
 
 func main() {
@@ -90,7 +99,12 @@ func main() {
 	})
 
 	router.GET("/watch/:billID/:stance", func(c *gin.Context) {
-		username, _ := c.Cookie("username")
+		userID, _ := c.Cookie("userID")
+		intUserID, err := strconv.Atoi(userID)
+		if err != nil {
+			c.Error(err)
+			return
+		}
 		billID := c.Param("billID")
 		intBillID, err := strconv.Atoi(billID)
 		if err != nil {
@@ -99,10 +113,10 @@ func main() {
 		}
 		stance := c.Param("stance")
 		var w Watchlist
-		db.Where("username = ? and bill_id = ?", username, intBillID).Find(&w)
+		db.Where("id = ? and bill_id = ?", intUserID, intBillID).Find(&w)
 		db.Delete(&w)
 		if stance != "U" {
-			db.Create(&Watchlist{Username: username, BillID: intBillID, Stance: stance})
+			db.Create(&Watchlist{UserID: intUserID, BillID: intBillID, Stance: stance})
 		}
 		// db.Commit()
 		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
