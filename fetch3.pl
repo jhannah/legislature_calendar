@@ -32,6 +32,7 @@ delete $masterList->{masterlist}->{session};
 # .tables
 # .schema bills
 my $dbh = DBI->connect("dbi:SQLite:dbname=$dbname","","");
+$dbh->do("DELETE from bills");
 my $strsql = <<EOT;
 INSERT INTO bills (id, session_id, number, status, last_action_date, last_action, title, url)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
