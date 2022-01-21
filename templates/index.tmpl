@@ -59,7 +59,14 @@
     {{ end }}
     <td>{{ .Status }}</td>
     <td>{{ .LastActionDate }}</td>
-    <td>{{ .LastAction }}</td>
+    <td>
+      {{ $l := len .LastAction }}
+      {{ if gt $l 40 }}
+        {{ printf "%.40s..." .LastAction }}
+      {{ else }}
+        {{ .LastAction }}
+      {{ end }}
+    </td>
     <td>{{ .Title }}</td>
   </tr>
 {{ end }}
