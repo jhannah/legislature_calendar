@@ -8,8 +8,8 @@
 </head>
 <body>
 
-{{ if .Username }}
-  {{ .Username }}
+{{ if gt .User.ID 0 }}
+  <a href="/user">{{ .User.Username }}</a>
   <a href="/logout">Logout</a>
 {{ else }}
   <form action="/login" method="POST">
@@ -18,11 +18,12 @@
     <input type="submit" value="Login">
   </form>
 {{ end }}
+<a href="/users">Browse all users</a>
 
 <h1>{{ .Title }}</h1>
 
 <table>
-{{ if .Username }}
+{{ if gt .User.ID 0 }}
   <tr><td colspan=6>My Bills</td></tr>
   {{ range .MyBills }}
     <tr>

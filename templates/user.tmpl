@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: Courier; }
+  table td { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<form action="/user" method="POST">
+<table>
+  <tr><td>Username</td><td><input name="username" value="{{ .User.Username }}"></td></tr>
+  <tr><td>Password</td><td><input name="password" value="{{ .User.Password }}"></td></tr>
+  <tr><td>Name</td>    <td><input name="name"     value="{{ .User.Name }}"></td></tr>
+  <tr><td>Email</td>   <td><input name="email"    value="{{ .User.Email }}"></td></tr>
+  <tr><td>URL</td>     <td><input name="url"      value="{{ .User.URL }}"></td></tr>
+</table>
+<input type="submit" value="Update">
+</form>
+
+<a href="/">Cancel</a>
+
+</br></br>
+<a href="https://github.com/jhannah/legislature_calendar">Source code</a>
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: Courier; }
+  table td { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<a href="/">Home</a>
+{{ if gt .User.ID 0 }}
+  <a href="/user">{{ .User.Username }}</a>
+  <a href="/logout">Logout</a>
+{{ end }}
+
+<h1>{{ .Title }}</h1>
+
+<table>
+{{ range .Users }}
+  <tr><td colspan=6>
+  {{ if .URL }}
+    <a href="{{ .URL }}">{{ .Name }}</a>
+  {{ else }}
+    {{ .Name }}
+  {{ end }}
+  </td></tr>
+  {{ range .Watchlists }}
+    <tr>
+      <td><a href="{{ .Bill.URL }}">{{ .Bill.Number }}</a></td>
+      <td>{{ .Stance }}</td>
+      <td>{{ .Bill.Status }}</td>
+      <td>{{ .Bill.LastActionDate }}</td>
+      <td>{{ .Bill.LastAction }}</td>
+      <td>{{ .Bill.Title }}</td>
+    </tr>
+  {{ end }}
+{{ end }}
+</table>
+
+</br></br>
+<a href="https://github.com/jhannah/legislature_calendar">Source code</a>
+</body>
+</html>
+
