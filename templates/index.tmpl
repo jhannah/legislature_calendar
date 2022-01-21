@@ -8,7 +8,10 @@
 </head>
 <body>
 
-{{ if gt .User.ID 0 }}
+{{ $logged_in := 0 }}
+{{ if gt .User.ID 0 }}{{ $logged_in = 1 }}{{ end }}
+
+{{ if $logged_in }}
   <a href="/user">{{ .User.Username }}</a>
   <a href="/logout">Logout</a>
 {{ else }}
@@ -23,16 +26,16 @@
 <h1>{{ .Title }}</h1>
 
 <table>
-{{ if gt .User.ID 0 }}
+{{ if $logged_in }}
   <tr><td colspan=6>My Bills</td></tr>
   {{ range .MyBills }}
     <tr>
       <td><a href="{{ .URL }}">{{ .Number }}</a></td>
-      <td>
-        {{ if eq .Stance "Y" }} Y {{ else }} <a href="/watch/{{ .ID }}/Y">Y</a> {{ end }}
-        {{ if eq .Stance "N" }} N {{ else }} <a href="/watch/{{ .ID }}/N">N</a> {{ end }}
-        <a href="/watch/{{ .ID }}/U">U</a>
-      </td>
+        <td>
+          {{ if eq .Stance "Y" }} Y {{ else }} <a href="/watch/{{ .ID }}/Y">Y</a> {{ end }}
+          {{ if eq .Stance "N" }} N {{ else }} <a href="/watch/{{ .ID }}/N">N</a> {{ end }}
+          <a href="/watch/{{ .ID }}/U">U</a>
+        </td>
       <td>{{ .Status }}</td>
       <td>{{ .LastActionDate }}</td>
       <td>{{ .LastAction }}</td>
@@ -45,11 +48,15 @@
 {{ range .AllBills }}
   <tr>
     <td><a href="{{ .URL }}">{{ .Number }}</a></td>
-    <td>
-      <a href="/watch/{{ .ID }}/Y">Y</a>
-      <a href="/watch/{{ .ID }}/N">N</a>
-      <a href="/watch/{{ .ID }}/W">W</a>
-    </td>
+    {{ if $logged_in }}
+      <td>
+        <a href="/watch/{{ .ID }}/Y">Y</a>
+        <a href="/watch/{{ .ID }}/N">N</a>
+        <a href="/watch/{{ .ID }}/W">W</a>
+      </td>
+    {{ else }}
+      <td></td>
+    {{ end }}
     <td>{{ .Status }}</td>
     <td>{{ .LastActionDate }}</td>
     <td>{{ .LastAction }}</td>
