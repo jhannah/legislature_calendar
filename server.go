@@ -52,6 +52,7 @@ type Watchlist struct {
 type User struct {
 	gorm.Model
 	ID       int
+	Username string
 	Password string
 	Name     string
 	Email    string
@@ -72,22 +73,24 @@ func main() {
 	result1 := db.Order("last_action_date desc").Find(&allBills)
 
 	router.GET("/", func(c *gin.Context) {
-		username, _ := c.Cookie("username")
 		var myBills []MyBill
 		var result2 *gorm.DB
-		if username != "" {
+		var u User
+		userID, _ := c.Cookie("userID")
+		if userID != "" {
 			// Add .Debug() to the front of the chain to see debug stuff :)
-			result2 = db.Order("last_action_date desc").Table("bills").Select("bills.*, watchlists.stance").Joins(
-				"JOIN watchlists on watchlists.bill_id = bills.id AND watchlists.username = ? AND watchlists.deleted_at IS NULL",
-				username,
+			result2 = db.Debug().Order("last_action_date desc").Table("bills").Select("bills.*, watchlists.stance").Joins(
+				"JOIN watchlists on watchlists.bill_id = bills.id AND watchlists.user_id = ? AND watchlists.deleted_at IS NULL",
+				userID,
 			).Find(&myBills)
+			db.Debug().Where("id = ?", userID).Find(&u)
 		}
 		// uhh... not sure how to make Go happy here (unused var, sometimes)
 		if result2 == nil {
 			result2 = nil
 		}
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"Username":      username,
+			"User":          u,
 			"Title":         "Nebraska 2021-2022 Regular Session 107th Legislature",
 			"AllBills":      allBills,
 			"MyBills":       myBills,
@@ -113,10 +116,9 @@ func main() {
 		}
 		stance := c.Param("stance")
 		var w Watchlist
-		db.Where("id = ? and bill_id = ?", intUserID, intBillID).Find(&w)
-		db.Delete(&w)
+		db.Debug().Where("user_id = ? and bill_id = ?", intUserID, intBillID).Delete(&w)
 		if stance != "U" {
-			db.Create(&Watchlist{UserID: intUserID, BillID: intBillID, Stance: stance})
+			db.Debug().Create(&Watchlist{UserID: intUserID, BillID: intBillID, Stance: stance})
 		}
 		// db.Commit()
 		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
@@ -127,21 +129,61 @@ func main() {
 		// https://chenyitian.gitbooks.io/gin-tutorials/content/docker/4.html
 		username := c.PostForm("username")
 		//password := c.PostForm("password")
-		c.SetCookie("username", username, 3600, "", "", false, true)
+
+		var u User
+		db.Debug().Where("username = ?", username).Find(&u)
+		if u.ID == 0 {
+			db.Debug().Create(&User{Username: username})
+			db.Debug().Where("username = ?", username).Find(&u)
+		}
+		c.SetCookie("userID", strconv.Itoa(u.ID), 3600, "", "", false, true)
 		// https://stackoverflow.com/questions/61970551/golang-gin-redirect-and-render-a-template-with-new-variables
 		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
 		c.Redirect(http.StatusFound, location.RequestURI())
 	})
 
 	router.GET("/logout", func(c *gin.Context) {
-		c.SetCookie("username", "", 3600, "", "", false, true)
+		c.SetCookie("userID", "", 3600, "", "", false, true)
+		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
+		c.Redirect(http.StatusFound, location.RequestURI())
+	})
+
+	router.GET("/user", func(c *gin.Context) {
+		userID, _ := c.Cookie("userID")
+		intUserID, err := strconv.Atoi(userID)
+		if err != nil {
+			c.Error(err)
+			return
+		}
+		var u User
+		db.Debug().Where("id = ?", intUserID).Find(&u)
+		c.HTML(http.StatusOK, "user.tmpl", gin.H{
+			"User": u,
+		})
+	})
+
+	router.POST("/user", func(c *gin.Context) {
+		userID, _ := c.Cookie("userID")
+		intUserID, err := strconv.Atoi(userID)
+		if err != nil {
+			c.Error(err)
+			return
+		}
+		var u User
+		db.Debug().Where("id = ?", intUserID).Find(&u)
+		u.Username = c.PostForm("username")
+		u.Password = c.PostForm("password")
+		u.Name = c.PostForm("name")
+		u.Email = c.PostForm("email")
+		u.URL = c.PostForm("url")
+		db.Debug().Save(&u)
 		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
 		c.Redirect(http.StatusFound, location.RequestURI())
 	})
 
 	router.GET("/init", func(c *gin.Context) {
 		// Migrate the schema
-		db.AutoMigrate(&Bill{}, &Watchlist{})
+		db.AutoMigrate(&Bill{}, &Watchlist{}, &User{})
 
 		// Create
 		// db.Create(&Bill{ID: 1, SessionID: 1810, Number: "LB875", Status: "Introduced", LastActionDate: "2022-01-07", LastAction: "Date of introduction", Title: "Rename the Director-State Engineer for the Department of Transportation as the Director of Transportation for the Department of Transportation", URL: "https://legiscan.com/NE/bill/LB875/2021"})
