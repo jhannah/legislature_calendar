@@ -15,6 +15,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type Bill struct {
@@ -47,16 +48,18 @@ type Watchlist struct {
 	UserID int
 	BillID int
 	Stance string
+	Bill   Bill
 }
 
 type User struct {
 	gorm.Model
-	ID       int
-	Username string
-	Password string
-	Name     string
-	Email    string
-	URL      string
+	ID         int
+	Username   string
+	Password   string
+	Name       string
+	Email      string
+	URL        string
+	Watchlists []Watchlist
 }
 
 func main() {
@@ -179,6 +182,25 @@ func main() {
 		db.Debug().Save(&u)
 		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
 		c.Redirect(http.StatusFound, location.RequestURI())
+	})
+
+	router.GET("/users", func(c *gin.Context) {
+		userID, _ := c.Cookie("userID")
+		intUserID, err := strconv.Atoi(userID)
+		if err != nil {
+			c.Error(err)
+			return
+		}
+		var user User
+		db.Debug().Where("id = ?", intUserID).Find(&user)
+
+		var users []User
+		db.Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
+		c.HTML(http.StatusOK, "users.tmpl", gin.H{
+			"User":  user,
+			"Users": users,
+			"Title": "Nebraska 2021-2022 Regular Session 107th Legislature",
+		})
 	})
 
 	router.GET("/init", func(c *gin.Context) {
