@@ -82,11 +82,11 @@ func main() {
 		userID, _ := c.Cookie("userID")
 		if userID != "" {
 			// Add .Debug() to the front of the chain to see debug stuff :)
-			result2 = db.Debug().Order("last_action_date desc").Table("bills").Select("bills.*, watchlists.stance").Joins(
+			result2 = db.Order("last_action_date desc").Table("bills").Select("bills.*, watchlists.stance").Joins(
 				"JOIN watchlists on watchlists.bill_id = bills.id AND watchlists.user_id = ? AND watchlists.deleted_at IS NULL",
 				userID,
 			).Find(&myBills)
-			db.Debug().Where("id = ?", userID).Find(&u)
+			db.Where("id = ?", userID).Find(&u)
 		}
 		// uhh... not sure how to make Go happy here (unused var, sometimes)
 		if result2 == nil {
@@ -119,9 +119,9 @@ func main() {
 		}
 		stance := c.Param("stance")
 		var w Watchlist
-		db.Debug().Where("user_id = ? and bill_id = ?", intUserID, intBillID).Delete(&w)
+		db.Where("user_id = ? and bill_id = ?", intUserID, intBillID).Delete(&w)
 		if stance != "U" {
-			db.Debug().Create(&Watchlist{UserID: intUserID, BillID: intBillID, Stance: stance})
+			db.Create(&Watchlist{UserID: intUserID, BillID: intBillID, Stance: stance})
 		}
 		// db.Commit()
 		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
@@ -134,10 +134,10 @@ func main() {
 		//password := c.PostForm("password")
 
 		var u User
-		db.Debug().Where("username = ?", username).Find(&u)
+		db.Where("username = ?", username).Find(&u)
 		if u.ID == 0 {
-			db.Debug().Create(&User{Username: username})
-			db.Debug().Where("username = ?", username).Find(&u)
+			db.Create(&User{Username: username})
+			db.Where("username = ?", username).Find(&u)
 		}
 		c.SetCookie("userID", strconv.Itoa(u.ID), 3600, "", "", false, true)
 		// https://stackoverflow.com/questions/61970551/golang-gin-redirect-and-render-a-template-with-new-variables
@@ -159,7 +159,7 @@ func main() {
 			return
 		}
 		var u User
-		db.Debug().Where("id = ?", intUserID).Find(&u)
+		db.Where("id = ?", intUserID).Find(&u)
 		c.HTML(http.StatusOK, "user.tmpl", gin.H{
 			"User": u,
 		})
@@ -173,26 +173,25 @@ func main() {
 			return
 		}
 		var u User
-		db.Debug().Where("id = ?", intUserID).Find(&u)
+		db.Where("id = ?", intUserID).Find(&u)
 		u.Username = c.PostForm("username")
 		u.Password = c.PostForm("password")
 		u.Name = c.PostForm("name")
 		u.Email = c.PostForm("email")
 		u.URL = c.PostForm("url")
-		db.Debug().Save(&u)
+		db.Save(&u)
 		location := url.URL{Path: "/"} // , RawQuery: q.Encode()}
 		c.Redirect(http.StatusFound, location.RequestURI())
 	})
 
 	router.GET("/users", func(c *gin.Context) {
 		userID, _ := c.Cookie("userID")
-		intUserID, err := strconv.Atoi(userID)
-		if err != nil {
-			c.Error(err)
-			return
+		var intUserID int
+		if userID != "" {
+			intUserID, _ = strconv.Atoi(userID)
 		}
 		var user User
-		db.Debug().Where("id = ?", intUserID).Find(&user)
+		db.Where("id = ?", intUserID).Find(&user)
 
 		var users []User
 		db.Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
