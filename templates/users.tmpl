@@ -24,7 +24,14 @@
         <td>{{ .Stance }}</td>
         <td>{{ .Bill.Status }}</td>
         <td>{{ .Bill.LastActionDate }}</td>
-        <td>{{ .Bill.LastAction }}</td>
+        <td>
+          {{ $l := len .Bill.LastAction }}
+          {{ if gt $l 40 }}
+            {{ printf "%.40s..." .Bill.LastAction }}
+          {{ else }}
+            {{ .Bill.LastAction }}
+          {{ end }}
+        </td>
         <td>{{ .Bill.Title }}</td>
       </tr>
     {{ end }}
