@@ -1,0 +1,41 @@
+{{ define "footer.tmpl" }}
+
+<br/><br/><br/><hr/>
+<h3>About this Website</h3>
+<p>
+  Legislative data via <a href="https://legiscan.com/">LegiScan</a>.
+  LegiScan is an amazing system. You really should go over there and create yourself a free account.
+  You can monitor all 50 states (United States) legislative activity. They can send you
+  update emails on the bills you're watching if you want them to, customized RSS feeds based on your
+  watchlist, APIs, and more.
+</p>
+<p>
+  LegiScan also provides "PolitiCorps" wherein you can create and join groups. Monitor bills, communicate
+  with other members, etc. 
+  Apparently in 2013 LegiScan <a href="https://www.mdshooters.com/showthread.php?t=147068">used to provide</a>
+  a "Browse PolitiCorps Directory" so you could browse their public groups to find / join ones
+  you are interested in. As a Nebraskan voter, this is exactly what I wanted: To see a list of organizations
+  that care about lists of legislation that I might also want to track. For some reason it appears that feature
+  no longer exists, and I couldn't find any Nebraska PolitiCorps groups via Google searches, so I created this website.
+</p>
+<p>
+  At some point this may become an "official" <a href="https://codefornebraska.org/">Code For Nebraska</a> project.
+  To discuss this project please join our Slack:
+  the <a href="https://join.slack.com/t/codefornebraska/shared_invite/zt-miabnojm-_699FyQnaaA9AS0PJcj24g">#lawmaking4all</a> channel.
+  If you live in a state other than Nebraska, theoretically we could easily extend this system to your state.
+  For that, or if you find bugs, please <a href="https://github.com/jhannah/legislature_calendar/issues">create a github Issue</a>.
+</p>
+<p>
+  This website is pre-pre-pre-alpha. We'll try not to lose data if people start using this, but it could easily happen.
+  And our security model is laughable so far, your "account" can trivially be hacked at any time, so build your watchlists in
+  LegiScan to take them seriously, and just use this website for fun for now.
+</p>
+<p>
+  Programmers: Golang + gin + GORM is pretty slick. :)
+  <a href="https://github.com/jhannah/legislature_calendar/blob/main/server.go">My code</a> is a mess so far.
+</p>
+
+</body>
+</html>
+
+{{ end }}

@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-  body { font-family: Courier; }
-  table td { white-space: nowrap; }
-</style>
-</head>
-<body>
+{{ template "header.tmpl" . }}
 
 <form action="/user" method="POST">
 <table>
@@ -21,8 +13,4 @@
 
 <a href="/">Cancel</a>
 
-</br></br>
-<a href="https://github.com/jhannah/legislature_calendar">Source code</a>
-</body>
-</html>
-
+{{ template "footer.tmpl" . }}

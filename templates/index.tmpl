@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-  body { font-family: Courier; }
-  table td { white-space: nowrap; }
-</style>
-</head>
-<body>
+{{ template "header.tmpl" . }}
 
 {{ $logged_in := 0 }}
 {{ if gt .User.ID 0 }}{{ $logged_in = 1 }}{{ end }}
@@ -72,8 +64,4 @@
 {{ end }}
 </table>
 
-</br></br>
-<a href="https://github.com/jhannah/legislature_calendar">Source code</a>
-</body>
-</html>
-
+{{ template "footer.tmpl" . }}
