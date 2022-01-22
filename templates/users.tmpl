@@ -10,22 +10,24 @@
 
 <table>
 {{ range .Users }}
-  <tr><td colspan=6>
-  {{ if .URL }}
-    <a href="{{ .URL }}">{{ .Name }}</a>
-  {{ else }}
-    {{ .Name }}
-  {{ end }}
-  </td></tr>
-  {{ range .Watchlists }}
-    <tr>
-      <td><a href="{{ .Bill.URL }}">{{ .Bill.Number }}</a></td>
-      <td>{{ .Stance }}</td>
-      <td>{{ .Bill.Status }}</td>
-      <td>{{ .Bill.LastActionDate }}</td>
-      <td>{{ .Bill.LastAction }}</td>
-      <td>{{ .Bill.Title }}</td>
-    </tr>
+  {{ if .Watchlists }}
+    <tr><td colspan=6>
+    {{ if .URL }}
+      <a href="{{ .URL }}">{{ .Name }}</a>
+    {{ else }}
+      {{ .Name }}
+    {{ end }}
+    </td></tr>
+    {{ range .Watchlists }}
+      <tr>
+        <td><a href="{{ .Bill.URL }}">{{ .Bill.Number }}</a></td>
+        <td>{{ .Stance }}</td>
+        <td>{{ .Bill.Status }}</td>
+        <td>{{ .Bill.LastActionDate }}</td>
+        <td>{{ .Bill.LastAction }}</td>
+        <td>{{ .Bill.Title }}</td>
+      </tr>
+    {{ end }}
   {{ end }}
 {{ end }}
 </table>
