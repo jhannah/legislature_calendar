@@ -1,6 +1,6 @@
 {{ template "header.tmpl" . }}
 
-<a href="/">Home</a>
+<a href="/">[Home]</a>
 {{ if gt .User.ID 0 }}
   <a href="/user">{{ .User.Username }}</a>
   <a href="/logout">Logout</a>

@@ -4,16 +4,17 @@
 {{ if gt .User.ID 0 }}{{ $logged_in = 1 }}{{ end }}
 
 {{ if $logged_in }}
-  <a href="/user">{{ .User.Username }}</a>
-  <a href="/logout">Logout</a>
+  <a href="/user">[{{ .User.Username }}]</a>
+  <a href="/logout">[Logout]</a>
 {{ else }}
   <form action="/login" method="POST">
     <input name="username" value="username">
     <input name="password" value="password">
     <input type="submit" value="Login">
   </form>
+  (For now password is ignored. New accounts are created for any username you enter.)
 {{ end }}
-<a href="/users">Browse all users</a>
+<a href="/users">[Browse all users]</a>
 
 <h1>{{ .Title }}</h1>
 
