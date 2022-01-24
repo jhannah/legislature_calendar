@@ -12,10 +12,12 @@
 {{ range .Users }}
   {{ if .Watchlists }}
     <tr><td colspan=6>
+    {{ $name := .Username }}
+    {{ if .Name }}{{ $name = .Name }}{{ end }}
     {{ if .URL }}
-      <a href="{{ .URL }}">{{ .Name }}</a>
+      <a href="{{ .URL }}">{{ $name }}</a>
     {{ else }}
-      {{ .Name }}
+      {{ $name }}
     {{ end }}
     </td></tr>
     {{ range .Watchlists }}
