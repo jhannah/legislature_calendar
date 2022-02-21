@@ -27,10 +27,10 @@ while (my $row = $csv->getline($fh)) {
 
 foreach my $person (keys %$people) {
   # next unless ($person == 18370);  # Justin Wayne
-  next unless ($person == 16611);   # Adam Morfeld
+  # next unless ($person == 16611);   # Adam Morfeld
   foreach my $other_person (keys %$people) {
     next if ($person == $other_person); # ignore themselves
-    next unless ($other_person == 18640); # Lynne Walz
+    # next unless ($other_person == 18640); # Lynne Walz
     foreach my $roll_call_id (keys %{$votes->{$other_person}}) {
       my $person_vote = $votes->{$person      }->{$roll_call_id};
       my $other_vote  = $votes->{$other_person}->{$roll_call_id};
@@ -41,7 +41,7 @@ foreach my $person (keys %$people) {
         # say "$roll_call_id: $person $person_vote $other_person $other_vote +1 = " . $friendship->{$person}->{$other_person};
       } else {
         $friendship->{$person}->{$other_person}->{disagree} += 1;
-        say "$roll_call_id: $person $person_vote $other_person $other_vote -1";
+        # say "$roll_call_id: $person $person_vote $other_person $other_vote -1";
         # say "$roll_call_id: $person $person_vote $other_person $other_vote -1 = " . $friendship->{$person}->{$other_person};
       }
     }
@@ -49,18 +49,25 @@ foreach my $person (keys %$people) {
 }
 
 my %printed_already;
+say "agree,disagree,name,name";
 foreach my $person (keys %$friendship) {
   # next unless ($person == 18370);  # Justin Wayne
   # say $people->{$person}->{name};
   my $x = $friendship->{$person};
   foreach my $other_person (sort { $x->{$b} <=> $x->{$a} } keys %$x) {
     next if ($printed_already{ join ".", sort $person, $other_person });
-    printf("%3s %3s %s <-> %s\n",
+    #printf("%3s %3s %s <-> %s\n",
+    #  $x->{$other_person}->{agree},
+    #  $x->{$other_person}->{disagree},
+    #  $people->{$person}->{name},
+    #  $people->{$other_person}->{name},
+    #);
+    say join ",", 
       $x->{$other_person}->{agree},
       $x->{$other_person}->{disagree},
       $people->{$person}->{name},
       $people->{$other_person}->{name},
-    );
+    ;
     $printed_already{ join ".", sort $person, $other_person } = 1;
   }
 }
