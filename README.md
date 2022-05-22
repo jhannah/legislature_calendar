@@ -11,21 +11,47 @@ leaving for now because it's helpful anyway:
 
 --------------------------------
 
-# LegiScan Public Datasets
+## Build
 
-## CSV Datasets
+The server will run on port `8080` by default.
+
+### Using native Go
+
+Use golang 1.17
+
+```
+brew install go@1.17
+go --version
+```
+
+Run the app
+
+```
+go run server.go
+```
+
+### Using Docker
+
+```
+make build
+make run
+```
+
+## LegiScan Public Datasets
+
+### CSV Datasets
 Compared to the JSON datasets the CVS collection represents a portable
 subset of LegiScan data within the limitation of the file format. These files
 are meant to be processed by another application, typically Excel or Access.
 
 See [LegiScan Datasets](https://legiscan.com/datasets) for more information.
 
-## State Links
+### State Links
 Note that state URLs are not actively maintained for history data in past
 sessions and may no longer be accessible. The LegiScan URL for each object is
 a permalink that will always be valid.
 
-## bills.csv
+### bills.csv
 List of bills and their basic details along with links to LegiScan and state pages.
 
 	bill_number - Bill number
@@ -43,7 +69,7 @@ List of bills and their basic details along with links to LegiScan and state pag
 	url - LegiScan URL for bill detail
 	state_link - State URL for bill detail
 
-## history.csv
+### history.csv
 List of history steps / actions taken, keyed to `bills.csv` by `bill_id`.
 
 	bill_id - LegiScan bill identifier
@@ -52,7 +78,7 @@ List of history steps / actions taken, keyed to `bills.csv` by `bill_id`.
 	sequence - Ordered sequence of history step
 	action - Description of history step
 
-## people.csv
+### people.csv
 List of legisltors and their basic details along with third party identifiers.
 
 	people_id - LegiScan person identifier
@@ -74,7 +100,7 @@ List of legisltors and their basic details along with third party identifiers.
 	knowwho_pid - Identifier for [KnowWho](https://knowwho.com/)
 	committee_id - Non-zero if the "person" is actually a committee sponsor
 
-## rollcalls.csv
+### rollcalls.csv
 List of roll calls for each bill, keyed to `bills.csv` by `bill_id`.
 
 	bill_id - LegiScan bill identifier
@@ -88,7 +114,7 @@ List of roll calls for each bill, keyed to `bills.csv` by `bill_id`.
 	absent - Number of Absences
 	total - Total votes
 
-## sponsors.csv
+### sponsors.csv
 List of sponsors for each bill, keyed to `bills.csv` and `people.csv` by `bill_id`
 and `people_id` respectively.
 
@@ -96,7 +122,7 @@ and `people_id` respectively.
 	people_id - LegiScan person identifer
 	position - Ordered position of the sponsor in list
 
-## votes.csv
+### votes.csv
 List of individual vote details for each roll call, keyed to `rollcalls.csv` and
 `people.csv` by `roll_call_id` and `people_id` respectively.
 
@@ -105,7 +131,7 @@ List of individual vote details for each roll call, keyed to `rollcalls.csv` and
 	vote - Vote integer value (1, 2, 3, 4)
 	vote_desc - Vote description (Yea, Nay, NV, Absent)
 
-## documents.csv
+### documents.csv
 List of document links associated with each bill, keyed to `bills.csv` by `bill_id`.
 
 	bill_id - LegiScan bill identifier
