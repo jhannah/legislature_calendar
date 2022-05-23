@@ -8,4 +8,7 @@ build: ## build the docker image
 
 .PHONY: run
 run: ## run the docker image
-	docker run -p 8080:8080 --rm legislative_calendar
+	docker run -p 8080:8080 --rm --init --tty legislative_calendar
+
+.PHONY: all
+all: build run
