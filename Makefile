@@ -11,4 +11,4 @@ run: ## run the docker image
 	docker run -p 8080:8080 --rm --init --tty legislative_calendar
 
 .PHONY: all
-all: build run
+all: build run ## build and run the docker image
