@@ -1,11 +1,18 @@
-FROM golang:1.17-alpine
+FROM golang:1.17-alpine as build-env
 
 RUN apk add --no-cache \
     gcc \
-    musl-dev
+    musl-dev \
+    ca-certificates
 
-COPY . /opt/legislative_server
+WORKDIR /go/src/app
 
-WORKDIR /opt/legislative_server
+COPY *.go .
+COPY templates/ templates/
 
-ENTRYPOINT ["go", "run", "server.go"]
+# go-sqlite3 requires CGO so we omit "CGO_ENABLED=0" and "-installsuffix cgo"
+RUN go mod init && \
+    go get -d -v ./... && \
+    GOOS=linux go build -a -o /go/bin/app server.go
+
+CMD ["/go/bin/app"]
