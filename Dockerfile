@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine as build-env
+FROM golang:1.18-alpine as build-env
 
 RUN apk add --no-cache \
     gcc \
