@@ -17,22 +17,22 @@ The server will run on port `8080` by default.
 
 ### Using native Go
 
-Use golang 1.17
+Use golang with homebrew
 
-```
-brew install go@1.17
-go --version
+```console
+brew install go@1.18
+go version
 ```
 
 Run the app
 
-```
+```console
 go run server.go
 ```
 
 ### Using Docker
 
-```
+```console
 make build
 make run
 ```
