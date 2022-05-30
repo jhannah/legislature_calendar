@@ -213,5 +213,7 @@ func main() {
 		c.Redirect(http.StatusFound, location.RequestURI())
 	})
 
-	router.Run(":8080")
+	// By default it serves on :8080 unless a
+	// PORT environment variable was defined.
+	router.Run()
 }
