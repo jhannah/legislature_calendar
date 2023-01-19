@@ -5,7 +5,7 @@ use JSON::XS qw(decode_json);
 use DBD::SQLite;
 
 my $dbname = "leg.sqlite3";
-my $session_id = 1810;
+my $session_id = 2028;
 my $api_key = 'ad1ae3b54176acb67c2d7d5082c805a5';
 my %status = (
   1 => "Introduced",
@@ -15,7 +15,11 @@ my %status = (
   6 => "Failed",
 );
 
-# https://api.legiscan.com/?key=ad1ae3b54176acb67c2d7d5082c805a5&op=getMasterList&id=1810
+# API docs: https://legiscan.com/gaits/documentation/legiscan
+# Get session list:
+#   https://api.legiscan.com/?key=ad1ae3b54176acb67c2d7d5082c805a5&op=getSessionList&state=NE
+# Get all bills for session 1810:
+#   https://api.legiscan.com/?key=ad1ae3b54176acb67c2d7d5082c805a5&op=getMasterList&id=1810
 
 my $ua = LWP::UserAgent->new;
 my $base_url = "https://api.legiscan.com/?key=$api_key";
