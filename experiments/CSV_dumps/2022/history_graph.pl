@@ -2,18 +2,42 @@
 
 use 5.26.0;
 use DBI;
+use GraphViz2;
 my $dbh = DBI->connect("dbi:SQLite:dbname=NE.sqlite3","","");
 
-my $strsql = "select bill_id, action from history";
+my $edges;
+my $graph = GraphViz2->new(
+  global => {directed => 1},
+);
+
+my $strsql = "select bill_id, action from history order by bill_id, sequence";
 my $sth = $dbh->prepare($strsql);
 $sth->execute;
-while (my @row = $sth->fetchrow) {
-  # print "$row[0] ";
-  say $row[1];
-  #say generic($row[1]);
+my $row_cnt;
+my $prev_g;
+my $prev_bill_id;
+while (my ($bill_id, $action) = $sth->fetchrow) {
+  my $g = generic($action);
+  say "($prev_bill_id) $bill_id $g";
+  last if ($row_cnt++ > 100);
+  if ((defined $prev_bill_id) && $bill_id != $prev_bill_id) {
+    $prev_g = $g;
+    $prev_bill_id = $bill_id;
+    next;
+  }
+  if ($prev_g) {
+    say "  $prev_g -> $g";
+    $graph->add_edge(from => $prev_g, to => $g);
+  }
+  $prev_g = $g;
+  $prev_bill_id = $bill_id;
 }
 $sth->finish;
 $dbh->disconnect;
+
+$graph->run(format => 'svg', output_file => 'NE.svg');
+
+
 
 sub generic {
   my ($action) = @_;
