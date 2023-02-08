@@ -1,15 +1,11 @@
 #! env perl
 
-use 5.26.0;
+use 5.36.0;
 use DBI;
 use GraphViz2;
 my $dbh = DBI->connect("dbi:SQLite:dbname=NE.sqlite3","","");
 
 my $edges;
-my $graph = GraphViz2->new(
-  global => {directed => 1},
-);
-
 my $strsql = "select bill_id, action from history order by bill_id, sequence";
 my $sth = $dbh->prepare($strsql);
 $sth->execute;
@@ -19,7 +15,7 @@ my $prev_bill_id;
 while (my ($bill_id, $action) = $sth->fetchrow) {
   my $g = generic($action);
   say "($prev_bill_id) $bill_id $g";
-  last if ($row_cnt++ > 100);
+  # last if ($row_cnt++ > 100);
   if ((defined $prev_bill_id) && $bill_id != $prev_bill_id) {
     $prev_g = $g;
     $prev_bill_id = $bill_id;
@@ -27,7 +23,7 @@ while (my ($bill_id, $action) = $sth->fetchrow) {
   }
   if ($prev_g) {
     say "  $prev_g -> $g";
-    $graph->add_edge(from => $prev_g, to => $g);
+    $edges->{$prev_g}->{$g}++;
   }
   $prev_g = $g;
   $prev_bill_id = $bill_id;
@@ -35,7 +31,25 @@ while (my ($bill_id, $action) = $sth->fetchrow) {
 $sth->finish;
 $dbh->disconnect;
 
-$graph->run(format => 'svg', output_file => 'NE.svg');
+
+my $graph = GraphViz2->new(
+  global => {directed => 1},
+  graph  => {
+    # rankdir => 'LR',
+  },
+);
+foreach my $from (keys %$edges) {
+  foreach my $to (keys %{$edges->{$from}}) {
+    my $cnt = $edges->{$from}->{$to};
+    if ($cnt > 20) {
+      $graph->add_edge(from => $from, to => $to, label => $cnt);
+    }
+  }
+}
+$graph->run(
+  format => 'svg',
+  output_file => 'NE.svg',
+);
 
 
 
