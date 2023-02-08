@@ -47,8 +47,8 @@ foreach my $from (keys %$edges) {
   }
 }
 $graph->run(
-  format => 'svg',
-  output_file => 'NE.svg',
+  format => 'svg', output_file => 'NE.svg',
+  # format => 'png', output_file => 'NE.png',
 );
 
 
