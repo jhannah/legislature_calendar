@@ -19,7 +19,8 @@ while (my ($bill_number, $action) = $sth->fetchrow) {
   # Only Bills. Not Appropriation Bills or Resolutions or other things.
   next unless ($bill_number =~ /LB\d+$/);
   my $g = generic($action);
-  say "($prev_bill_number) $bill_number $g";
+  # say "($prev_bill_number) $bill_number $g";
+  # say $g;
   # last if ($row_cnt++ > 100);
   if ((defined $prev_bill_number) && $bill_number ne $prev_bill_number) {
     $prev_g = $g;
@@ -40,7 +41,7 @@ $dbh->disconnect;
 my $graph = GraphViz2->new(
   global => {directed => 1},
   graph  => {
-    # rankdir => 'LR',
+    # rankdir => 'LR',  # Layout: left to right (instead of top to bottom)
   },
 );
 foreach my $from (keys %$edges) {
@@ -61,9 +62,11 @@ $graph->run(
 sub generic {
   my ($action) = @_;
   $action =~ s/.* (name added|name withdrawn|point of order|priority bill)/\[Senator\] $1/;
-  $action =~ s/.* (AM|FA)\d+ (adopted|filed|withdrawn|refiled|lost|reoffered|not considered|pending)/\[Senator\] \[Amendment] $2/;
+  # $action =~ s/.* (AM|FA)\d+ (adopted|filed|withdrawn|refiled|lost|reoffered|not considered|pending)/\[Senator\] \[Amendment] $2/;
+  $action =~ s/.* (AM|FA)\d+ (adopted|filed|withdrawn|refiled|lost|reoffered|not considered|pending)/\[Senator\] \[Amendment] \[Action\]/;
   # $action =~ s/.* FA\d+ (adopted|filed|withdrawn|lost|pending|not considered)/\[Senator\] \[Floor Amendment] $1/;
-  $action =~ s/.* MO\d+ (adopted|filed|withdrawn|failed|pending|Indefinitely postpone filed|Indefinitely postpone|prevailed|Invoke cloture pursuant to Rule 7, Sec\. 10 filed)/\[Senator\] \[Motion] $1/;
+  # $action =~ s/.* MO\d+ (adopted|filed|withdrawn|failed|pending|Indefinitely postpone filed|Indefinitely postpone|prevailed|Invoke cloture pursuant to Rule 7, Sec\. 10 filed)/\[Senator\] \[Motion] $1/;
+  $action =~ s/.* MO\d+ (adopted|filed|withdrawn|failed|pending|Indefinitely postpone filed|Indefinitely postpone|prevailed|Invoke cloture pursuant to Rule 7, Sec\. 10 filed)/\[Senator\] \[Motion] \[Action\]/;
   $action =~ s/(Provisions\/portions of) LB.*(amended into).*/$1 \[Bill1\] $2 \[Bill2\] by \[Amendment\]/;
   $action =~ s/(Placed on General File with) AM.*/$1 \[Amendment\]/;
   $action =~ s/(Placed on Select File with) ER.*/$1 \[Enrollment and Review\]/;
@@ -79,6 +82,8 @@ sub generic {
   $action =~ s/.* MO\d+ (Recommit|Rerefer) to (.*) filed/\[Senator\] \[Motion\] $1 to $2 filed/;
   $action =~ s/.* MO\d+ (Becomes law notwithstanding the objections of the Governor filed)/\[Senator\] \[Motion\] $1/;
   $action =~ s/.* Withdraw (bill )?filed/\[Senator\] \[Motion\] Withdraw filed/;
+  $action =~ s/.*suspend rules.*/Motion to suspend rules/i;
+  $action =~ s/Referred to .* Committee/Referred to \[Committee\]/;
   return $action;
 }
 
