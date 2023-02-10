@@ -6,11 +6,13 @@ ack -i "Date of introduction" `find ./ -name "history.csv"` | cut -d, -f 2 | sor
 SQLite
 ------------
 
+sqlite3 NE.sqlite3 < schema.sql
+
 Load all the bills:
-find . -type f -name 'bills.csv' | xargs -I% sqlite3 NE.sqlite3 ".mode csv" ".import % bills" ".exit"
+find . -type f -name 'bills.csv' | xargs -I% sqlite3 NE.sqlite3 ".mode csv" ".import --skip 1 % bills" ".exit"
 
 Load all the history:
-find . -type f -name 'history.csv' | xargs -I% sqlite3 NE.sqlite3 ".mode csv" ".import % history" ".exit"
+find . -type f -name 'history.csv' | xargs -I% sqlite3 NE.sqlite3 ".mode csv" ".import --skip 1 % history" ".exit"
 
 sqlite3 NE.sqlite3
 
