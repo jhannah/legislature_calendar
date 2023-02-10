@@ -10,6 +10,7 @@ my $strsql = <<EOT;
   SELECT b.bill_number, action
   FROM bills b, history h
   WHERE b.bill_id = h.bill_id
+  AND action NOT LIKE '%name added%'
   ORDER BY h.bill_id, h.sequence
 EOT
 my $sth = $dbh->prepare($strsql);
@@ -44,6 +45,7 @@ my $graph = GraphViz2->new(
     # rankdir => 'LR',  # Layout: left to right (instead of top to bottom)
   },
 );
+$graph->add_node(name => 'Date of introduction'); # , style => 'filled', fillcolor => 'green');
 foreach my $from (keys %$edges) {
   foreach my $to (keys %{$edges->{$from}}) {
     my $cnt = $edges->{$from}->{$to};
@@ -83,8 +85,8 @@ sub generic {
   $action =~ s/.* MO\d+ (Becomes law notwithstanding the objections of the Governor filed)/\[Senator\] \[Motion\] $1/;
   $action =~ s/.* Withdraw (bill )?filed/\[Senator\] \[Motion\] Withdraw filed/;
   $action =~ s/.*suspend rules.*/Motion to suspend rules/i;
-  $action =~ s/Referred to .* Committee/Referred to \[Committee\]/;
-  $action =~ s/Rereferred to .* Committee/Rereferred to \[Committee\]/;
+  #$action =~ s/Referred to .* Committee/Referred to \[Committee\]/;
+  #$action =~ s/Rereferred to .* Committee/Rereferred to \[Committee\]/;
   $action =~ s/.* AM\d+ divided/\[Committee\] \[Amendment\] divided/;
   $action =~ s/Chair ruled.*/Chair ruled \[Action\]/;
   $action =~ s/.* (explanation of vote)/\[Senator] $1/;
