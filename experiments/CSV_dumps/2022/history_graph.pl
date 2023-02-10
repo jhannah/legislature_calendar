@@ -10,7 +10,7 @@ my $strsql = <<EOT;
   SELECT b.bill_number, action
   FROM bills b, history h
   WHERE b.bill_id = h.bill_id
-  ORDER BY h.bill_id, h.sequence
+  ORDER BY h.bill_id, h.date, h.sequence
 EOT
 my $sth = $dbh->prepare($strsql);
 $sth->execute;
@@ -19,7 +19,7 @@ while (my ($bill_number, $action) = $sth->fetchrow) {
   # Only Bills. Not Appropriation Bills or Resolutions or other things.
   next unless ($bill_number =~ /LB\d+$/);
   my $g = generic($action);
-  # say "($prev_bill_number) $bill_number $g";
+  say "($prev_bill_number) $bill_number $g";
   # say $g;
   # last if ($row_cnt++ > 100);
   if ((defined $prev_bill_number) && $bill_number ne $prev_bill_number) {
@@ -47,9 +47,9 @@ my $graph = GraphViz2->new(
 foreach my $from (keys %$edges) {
   foreach my $to (keys %{$edges->{$from}}) {
     my $cnt = $edges->{$from}->{$to};
-    if ($cnt > 19) {
+    #if ($cnt > 19) {
       $graph->add_edge(from => $from, to => $to, label => $cnt);
-    }
+    #}
   }
 }
 $graph->run(
@@ -84,6 +84,10 @@ sub generic {
   $action =~ s/.* Withdraw (bill )?filed/\[Senator\] \[Motion\] Withdraw filed/;
   $action =~ s/.*suspend rules.*/Motion to suspend rules/i;
   $action =~ s/Referred to .* Committee/Referred to \[Committee\]/;
+  $action =~ s/.* AM\d+ divided/\[Committee\] \[Amendment\] divided/;
+  $action =~ s/Chair ruled.*/Chair ruled \[Action\]/;
+  $action =~ s/(.{50}).*/$1.../;   # GraphViz explodes at some certain length
+  # e.g. This is too long: Stinner MO218 To override the Governors line-item veto contained in the following section of the bill: Section 28, transfer of funds from the Prison Overcrowding Contingency Fund to the Vocational and Life Skills Programming Fund filed
   return $action;
 }
 
