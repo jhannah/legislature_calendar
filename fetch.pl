@@ -1,5 +1,5 @@
 #! env perl
-use Modern::Perl;
+use 5.38.0;
 use LWP::UserAgent;
 use JSON::XS qw(decode_json);
 use DBD::SQLite;

@@ -6,8 +6,15 @@ Generating quick calendars from LegiScan CSV files.
    
 Sample HTML output: http://jays.net/tmp/j.html
 
-Here's their README which I accidentally copied in here, but am 
-leaving for now because it's helpful anyway:
+## Load a local SQLite database:
+
+    cpanm --installdeps .
+		perl fetch.pl
+
+## Golang web app
+
+Here's their README which I accidentally copied in here ("from where?", Jay asked himself a year
+later, having totally forgotten where this came from), but am leaving for now because it's helpful anyway:
 
 --------------------------------
 
