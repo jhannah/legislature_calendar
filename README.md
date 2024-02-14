@@ -1,15 +1,16 @@
 # Jay hacking around with calendars
 
-Generating quick calendars from LegiScan CSV files.
+Generating various things from LegiScan data.
 
-   https://legiscan.com/NE/datasets
-   
-Sample HTML output: http://jays.net/tmp/j.html
+    https://legiscan.com/NE/datasets
 
-## Load a local SQLite database:
+## From scratch:
 
+    go run server.go
+    http://localhost:8080/init   # This uses our Golang models to create SQLite tables
     cpanm --installdeps .
-		perl fetch.pl
+    perl fetch.pl                # Loads all bill data from Legiscan
+    restart Golang server. Golang doesn't detect that our leg.sqlite3 file has massively changed.
 
 ## Golang web app
 
