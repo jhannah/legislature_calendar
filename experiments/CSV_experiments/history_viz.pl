@@ -5,7 +5,8 @@ use utf8;
 
 my $dir = "NE/2023-2024_108th_Legislature/csv";
 my $header = "Nebraska 2023-2024 108th Legislature";
-my $source_code = '<a href="https://github.com/jhannah/legislature_calendar/blob/main/experiments/CSV_experiments/history_viz.pl">Source code</a>';
+my $data_source = 'Data as of 2024-02-11 from <a href="https://legiscan.com/NE/datasets">Legiscan</a>.';
+my $source_code = '<a href="https://github.com/jhannah/legislature_calendar/blob/main/experiments/CSV_experiments/history_viz.pl">Source code</a>.';
 
 open my $out, ">:encoding(utf8)", "history_viz.html" or die $!;
 
@@ -105,7 +106,8 @@ td {
 <h1>$header</h1>
 
 <p>Reading from left to right, each character is one calendar day of this session, and what action(s) were taken.
-"." means no action was taken on this bill on that calendar day, but the bill is neither Passed nor Failed.
+"." means no action was taken on this bill on that calendar day, but the bill is neither Passed nor Failed so far.
+$data_source
 $source_code
 </p>
 
@@ -135,6 +137,7 @@ sub print_footer {
 </table>
 
 </br></br>
+$data_source
 $source_code
 </body>
 </html>
