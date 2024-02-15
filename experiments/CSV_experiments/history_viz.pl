@@ -1,7 +1,6 @@
 #! env perl
-use Modern::Perl;
+use 5.38.0;
 use Text::CSV_XS;
-no warnings "experimental";
 
 my ($bills, %dates_list, $history_per_bill);
 
