@@ -72,8 +72,14 @@ foreach my $bill_id (sort keys %$history_per_bill) {
       else                                { print $out $dots }
     }
   }
+  my $td_class = "";
+  my $status = $bills->{$bill_id}->{status_desc};
+  for ($status) {
+    if    (/Failed/) { $td_class = 'class="red"' }
+    elsif (/Passed/) { $td_class = 'class="green"' }
+  }
   print $out "</td>";
-  printf $out '<td>%s</td>', $bills->{$bill_id}->{status_desc};
+  printf $out '<td %s>%s</td>', $td_class, $status;
   printf $out '<td>%s <a href="%s">LegiScan</a></td>',
     $bills->{$bill_id}->{title},
     $bills->{$bill_id}->{url},
@@ -98,6 +104,12 @@ table td.fixed {
 }
 td {
   white-space: nowrap;
+}
+.red {
+  background-color: #F1D9D9;
+}
+.green {
+  background-color: #E4F1D9;
 }
 </style>
 </head>
@@ -129,6 +141,12 @@ $source_code
 </table>
 
 <table>
+<tr>
+  <th>Bill</th>
+  <th>Daily actions</th>
+  <th>Status</th>
+  <th align="left">Title</th>
+</tr>
 EOT
 }
 
