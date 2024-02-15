@@ -5,6 +5,8 @@ use utf8;
 
 my $dir = "NE/2023-2024_108th_Legislature/csv";
 my $header = "Nebraska 2023-2024 108th Legislature";
+my $source_code = '<a href="https://github.com/jhannah/legislature_calendar/blob/main/experiments/CSV_experiments/history_viz.pl">Source code</a>';
+
 open my $out, ">:encoding(utf8)", "history_viz.html" or die $!;
 
 my ($bills, %dates_list, $history_per_bill);
@@ -33,7 +35,7 @@ while (my $row = $csv->getline($fh)) {
   # Gah... multiple things on same day cause problems for simply overwriting...
   # Make the more important ones stick.
   my $current = $history_per_bill->{$bill_id}->{$date} // '';
-  if ($current =~ /(Date of introduction|signed|Placed on)/) {
+  if ($current =~ /(Date of introduction|signed|Placed on|Indefinitely Postponed)/) {
     # Don't overwrite.
   } else {
     # Overwrite
@@ -45,7 +47,7 @@ print_header();
 
 foreach my $bill_id (sort keys %$history_per_bill) {
   #next unless ($bill_id eq "1395419");
-  printf $out '<tr><td><a href="%s">%s</a></td> <td>',
+  printf $out '<tr><td><a href="%s">%s</a></td> <td class="fixed">',
     $bills->{$bill_id}->{state_link},
     $bills->{$bill_id}->{bill_number},
   ;
@@ -64,6 +66,7 @@ foreach my $bill_id (sort keys %$history_per_bill) {
       elsif (/Returned by Governor/)      { print $out "R" }
       elsif (/President\/Speaker signed/) { print $out "S"; $dots = "&nbsp;" }
       elsif (/Bill withdrawn/)            { print $out "W"; $dots = "&nbsp;" }
+      elsif (/Indefinitely Postponed/)    { print $out "P"; $dots = "&nbsp;" }
       elsif (/\w/)                        { print $out "x" }
       else                                { print $out $dots }
     }
@@ -86,11 +89,13 @@ sub print_header {
 <html>
 <head>
 <style>
-body { font-family: Courier; }
-table td {
+table td.fixed {
   // width: 30px;
-  //overflow: hidden;
-  //display: inline-block;
+  // overflow: hidden;
+  // display: inline-block;
+  font-family: Courier;
+}
+td {
   white-space: nowrap;
 }
 </style>
@@ -98,6 +103,29 @@ table td {
 <body>
 
 <h1>$header</h1>
+
+<p>Reading from left to right, each character is one calendar day of this session, and what action(s) were taken.
+"." means no action was taken on this bill on that calendar day, but the bill is neither Passed nor Failed.
+$source_code
+</p>
+
+<table>
+<tr><td class="fixed">I</td><td>Date of introduction</td></tr>
+<tr><td class="fixed">r</td><td>Referred</td></tr>
+<tr><td class="fixed">H</td><td>Notice of Hearing/other</td></tr>
+<tr><td class="fixed">1</td><td>Placed on General File</td></tr>
+<tr><td class="fixed">2</td><td>Placed on Select File</td></tr>
+<tr><td class="fixed">F</td><td>Final Reading</td></tr>
+<tr><td class="fixed">G</td><td>Presented to Governor</td></tr>
+<tr><td class="fixed">A</td><td>Approved by Governor</td></tr>
+<tr><td class="fixed">R</td><td>Returned by Governor</td></tr>
+<tr><td class="fixed">S</td><td>President/Speaker signed</td></tr>
+<tr><td class="fixed">W</td><td>Bill withdrawn</td></tr>
+<tr><td class="fixed">P</td><td>Indefinitely Postponed</td></tr>
+<tr><td class="fixed">x</td><td>other action</td></tr>
+<tr><td class="fixed">.</td><td>No action taken on this day</td></tr>
+</table>
+
 <table>
 EOT
 }
@@ -107,7 +135,7 @@ sub print_footer {
 </table>
 
 </br></br>
-<a href="https://github.com/jhannah/legislature_calendar/blob/main/experiments/CSV_experiments/history_viz.pl">Source code</a>
+$source_code
 </body>
 </html>
 EOT
