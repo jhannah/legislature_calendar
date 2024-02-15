@@ -107,7 +107,7 @@ sub print_footer {
 </table>
 
 </br></br>
-<a href="https://github.com/jhannah/legislature_calendar">Source code</a>
+<a href="https://github.com/jhannah/legislature_calendar/blob/main/experiments/CSV_experiments/history_viz.pl">Source code</a>
 </body>
 </html>
 EOT
