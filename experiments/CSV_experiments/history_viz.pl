@@ -1,12 +1,17 @@
 #! env perl
 use 5.38.0;
 use Text::CSV_XS;
+use utf8;
+
+my $dir = "NE/2023-2024_108th_Legislature/csv";
+my $header = "Nebraska 2023-2024 108th Legislature";
+open my $out, ">:encoding(utf8)", "history_viz.html" or die $!;
 
 my ($bills, %dates_list, $history_per_bill);
 
 my $csv = Text::CSV_XS->new ({ binary => 1, auto_diag => 1 });
 
-open my $fh, "<:encoding(utf8)", "bills.csv" or die $!;
+open my $fh, "<:encoding(utf8)", "$dir/bills.csv" or die $!;
 <$fh>;  # skip header
 while (my $row = $csv->getline($fh)) {
   my $bill_id = $row->[0];
@@ -19,7 +24,7 @@ while (my $row = $csv->getline($fh)) {
   };
 }
 
-open $fh, "<:encoding(utf8)", "history.csv" or die $!;
+open $fh, "<:encoding(utf8)", "$dir/history.csv" or die $!;
 <$fh>;  # skip header
 while (my $row = $csv->getline($fh)) {
   my $bill_id = $row->[0];
@@ -40,43 +45,43 @@ print_header();
 
 foreach my $bill_id (sort keys %$history_per_bill) {
   #next unless ($bill_id eq "1395419");
-  printf('<tr><td><a href="%s">%s</a></td> <td>',
+  printf $out '<tr><td><a href="%s">%s</a></td> <td>',
     $bills->{$bill_id}->{state_link},
     $bills->{$bill_id}->{bill_number},
-  );
+  ;
   my $dots = "&nbsp;";
   foreach my $date (sort keys %dates_list) {
     my $action = $history_per_bill->{$bill_id}->{$date} // '';
     for ($action) {
-      when (/Date of introduction/)      { print "I"; $dots = "." }
-      when (/Referred/)                  { print "r" }
-      when (/Notice/)                    { print "H" }
-      when (/Placed on General File/)    { print "1" }
-      when (/Placed on Select File/)     { print "2" }
-      when (/Final Reading/)             { print "F" }
-      when (/Presented to Governor/)     { print "G" }
-      when (/Approved by Governor/)      { print "A"; $dots = "&nbsp;" }
-      when (/Returned by Governor/)      { print "R" }
-      when (/President\/Speaker signed/) { print "S"; $dots = "&nbsp;" }
-      when (/Bill withdrawn/)            { print "W"; $dots = "&nbsp;" }
-      when (/\w/)                        { print "x" }
-      default                            { print $dots }
+      if    (/Date of introduction/)      { print $out "I"; $dots = "." }
+      elsif (/Referred/)                  { print $out "r" }
+      elsif (/Notice/)                    { print $out "H" }
+      elsif (/Placed on General File/)    { print $out "1" }
+      elsif (/Placed on Select File/)     { print $out "2" }
+      elsif (/Final Reading/)             { print $out "F" }
+      elsif (/Presented to Governor/)     { print $out "G" }
+      elsif (/Approved by Governor/)      { print $out "A"; $dots = "&nbsp;" }
+      elsif (/Returned by Governor/)      { print $out "R" }
+      elsif (/President\/Speaker signed/) { print $out "S"; $dots = "&nbsp;" }
+      elsif (/Bill withdrawn/)            { print $out "W"; $dots = "&nbsp;" }
+      elsif (/\w/)                        { print $out "x" }
+      else                                { print $out $dots }
     }
   }
-  print "</td>";
-  printf('<td>%s</td>', $bills->{$bill_id}->{status_desc});
-  printf('<td>%s <a href="%s">LegiScan</a></td>',
+  print $out "</td>";
+  printf $out '<td>%s</td>', $bills->{$bill_id}->{status_desc};
+  printf $out '<td>%s <a href="%s">LegiScan</a></td>',
     $bills->{$bill_id}->{title},
     $bills->{$bill_id}->{url},
-  );
-  print "</tr>\n";
+  ;
+  print $out "</tr>\n";
 }
 
 print_footer();
 
 
 sub print_header {
-  print <<EOT;
+  print $out <<EOT;
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,13 +97,13 @@ table td {
 </head>
 <body>
 
-<h1>2021 Nebraska Legislature</h1>
+<h1>$header</h1>
 <table>
 EOT
 }
 
 sub print_footer {
-  print <<EOT;
+  print $out <<EOT;
 </table>
 
 </br></br>
