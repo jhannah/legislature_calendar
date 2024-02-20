@@ -9,16 +9,13 @@ package main
 // http://localhost:8080
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"golang.org/x/exp/maps"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
 )
 
 type Bill struct {
@@ -195,15 +192,14 @@ func main() {
 		}
 		var user User
 		db.Where("id = ?", intUserID).Find(&user)
-
 		var users []User
 
 		// So here's our original one-liner version, which magically cascades to all our tables,
 		// but we're unhappy with the sub-sorting so we do more complicated things:
-		db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
+		// db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
 
 		var sqlStr string
-		knownUserIds := make(map[any]User)
+		knownUserIds := make(map[int]User)
 		sqlStr = `
 			SELECT users.id, users.name, users.url,
 				bills.url, bills.number,
@@ -215,47 +211,41 @@ func main() {
 			ORDER BY users.name ASC, bills.last_action_date DESC
 			;
 		`
-		thisRow := make([]interface{}, 9) // 9 columns
-		for i := range thisRow {
-			thisRow[i] = new(interface{})
-		}
-		// ignore err
-		rows, _ := db.Debug().Raw(sqlStr).Rows()
+		var user_id int
+		var user_name, user_url, bill_url, bill_number, watchlist_stance, bill_last_action_date, bill_last_action, bill_title string
+		// ignore err. Add .Debug() up front to debug the SQL
+		rows, _ := db.Raw(sqlStr).Rows()
 		defer rows.Close()
+		var user_index = 0
 		for rows.Next() {
-			rows.Scan(thisRow...)
-			fmt.Println("thisRow is", thisRow)
-			fmt.Println("thisRow[0] is", &thisRow[0])
-			thisUser := knownUserIds[thisRow[0]]
-			thisUser.ID = thisRow[0].(int)
-			thisUser.Name = thisRow[1].(string)
-			thisUser.URL = thisRow[2].(string)
+			rows.Scan(&user_id, &user_name, &user_url, &bill_url, &bill_number, &watchlist_stance, &bill_last_action_date, &bill_last_action, &bill_title)
+			thisUser := knownUserIds[user_id]
+			thisUser.ID = user_id
+			thisUser.Name = user_name
+			thisUser.URL = user_url
 			thisUser.Watchlists = append(thisUser.Watchlists, Watchlist{
-				UserID: thisUser.ID,
-				Stance: thisRow[5].(string),
+				UserID: user_id,
+				Stance: watchlist_stance,
 				Bill: Bill{
-					Number:         thisRow[4].(string),
-					URL:            thisRow[3].(string),
-					LastActionDate: thisRow[6].(string),
-					LastAction:     thisRow[7].(string),
-					Title:          thisRow[8].(string),
+					Number:         bill_number,
+					URL:            bill_url,
+					LastActionDate: bill_last_action_date,
+					LastAction:     bill_last_action,
+					Title:          bill_title,
 				},
 			})
+			_, ok := knownUserIds[user_id]
+			if !ok {
+				// store users in SQL sorted order
+				user_index += 1
+				users = append(users, thisUser)
+			}
+			knownUserIds[user_id] = thisUser
+			users[user_index-1] = thisUser
 		}
-
-		// Add .Debug() to the front of the chain to see debug stuff :)
-		// .Order("bills.last_action_date DESC")
-		// db.Debug().Preload("Watchlists.Bill").Order("bills.last_action_date desc").Preload(clause.Associations).Find(&users)
-		//db.Debug().Preload("Watchlists.Bill", func(db *gorm.DB) *gorm.DB {
-		//	return db.Order("bills.last_action_date DESC")
-		//}).Find(&users)
-		// db.Debug().Table("users").Preload(clause.Associations).Select("users.*, bills.*, watchlists.stance").Joins("JOIN watchlists on users.id = watchlists.user_id AND watchlists.deleted_at IS NULL").Joins("JOIN bills on watchlists.bill_id = bills.id").Order("bills.last_action_date desc").Find(&users)
-
-		fmt.Println("howdy")
-		fmt.Println(maps.Values(knownUserIds))
 		c.HTML(http.StatusOK, "users.tmpl", gin.H{
 			"User":  user,
-			"Users": maps.Values(knownUserIds),
+			"Users": users,
 			"Title": "Nebraska 2021-2022 Regular Session 107th Legislature",
 		})
 	})
