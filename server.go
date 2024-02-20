@@ -203,7 +203,7 @@ func main() {
 		db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
 
 		var sqlStr string
-		knownUserIds := make(map[int]User)
+		knownUserIds := make(map[any]User)
 		sqlStr = `
 			SELECT users.id, users.name, users.url,
 				bills.url, bills.number,
@@ -215,42 +215,32 @@ func main() {
 			ORDER BY users.name ASC, bills.last_action_date DESC
 			;
 		`
-		var thisRow struct {
-			user_id               int
-			user_name             string
-			user_url              string
-			bill_url              string
-			bill_number           string
-			watchlist_stance      string
-			bill_last_action_date string
-			bill_last_action      string
-			bill_title            string
+		thisRow := make([]interface{}, 9) // 9 columns
+		for i := range thisRow {
+			thisRow[i] = new(interface{})
 		}
-		//var thisRow []string
 		// ignore err
 		rows, _ := db.Debug().Raw(sqlStr).Rows()
 		defer rows.Close()
 		for rows.Next() {
-			rows.Scan(&thisRow)
+			rows.Scan(thisRow...)
 			fmt.Println("thisRow is", thisRow)
-			thisUser := knownUserIds[thisRow.user_id]
-			thisUser.ID = thisRow.user_id
-			thisUser.Name = thisRow.user_name
-			thisUser.URL = thisRow.user_url
+			fmt.Println("thisRow[0] is", &thisRow[0])
+			thisUser := knownUserIds[thisRow[0]]
+			thisUser.ID = thisRow[0].(int)
+			thisUser.Name = thisRow[1].(string)
+			thisUser.URL = thisRow[2].(string)
 			thisUser.Watchlists = append(thisUser.Watchlists, Watchlist{
 				UserID: thisUser.ID,
-				Stance: thisRow.watchlist_stance,
+				Stance: thisRow[5].(string),
 				Bill: Bill{
-					Number:         thisRow.bill_number,
-					URL:            thisRow.bill_url,
-					LastActionDate: thisRow.bill_last_action_date,
-					LastAction:     thisRow.bill_last_action,
-					Title:          thisRow.bill_title,
+					Number:         thisRow[4].(string),
+					URL:            thisRow[3].(string),
+					LastActionDate: thisRow[6].(string),
+					LastAction:     thisRow[7].(string),
+					Title:          thisRow[8].(string),
 				},
 			})
-
-			// do something
-			// User.Watchlists.Bill
 		}
 
 		// Add .Debug() to the front of the chain to see debug stuff :)
