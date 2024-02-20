@@ -4,15 +4,18 @@ package main
 // go get -u github.com/gin-gonic/gin
 // go get -u gorm.io/gorm
 // go get -u gorm.io/driver/sqlite
+// go get -u golang.org/x/exp/maps
 // go run server.go
 // http://localhost:8080
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/exp/maps"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -194,10 +197,75 @@ func main() {
 		db.Where("id = ?", intUserID).Find(&user)
 
 		var users []User
-		db.Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
+
+		// So here's our original one-liner version, which magically cascades to all our tables,
+		// but we're unhappy with the sub-sorting so we do more complicated things:
+		db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
+
+		var sqlStr string
+		knownUserIds := make(map[int]User)
+		sqlStr = `
+			SELECT users.id, users.name, users.url,
+				bills.url, bills.number,
+			  watchlists.stance,
+				bills.last_action_date, bills.last_action, bills.title
+			FROM users
+			JOIN watchlists on watchlists.user_id = users.id
+			JOIN bills on watchlists.bill_id = bills.id
+			ORDER BY users.name ASC, bills.last_action_date DESC
+			;
+		`
+		var thisRow struct {
+			user_id               int
+			user_name             string
+			user_url              string
+			bill_url              string
+			bill_number           string
+			watchlist_stance      string
+			bill_last_action_date string
+			bill_last_action      string
+			bill_title            string
+		}
+		//var thisRow []string
+		// ignore err
+		rows, _ := db.Debug().Raw(sqlStr).Rows()
+		defer rows.Close()
+		for rows.Next() {
+			rows.Scan(&thisRow)
+			fmt.Println("thisRow is", thisRow)
+			thisUser := knownUserIds[thisRow.user_id]
+			thisUser.ID = thisRow.user_id
+			thisUser.Name = thisRow.user_name
+			thisUser.URL = thisRow.user_url
+			thisUser.Watchlists = append(thisUser.Watchlists, Watchlist{
+				UserID: thisUser.ID,
+				Stance: thisRow.watchlist_stance,
+				Bill: Bill{
+					Number:         thisRow.bill_number,
+					URL:            thisRow.bill_url,
+					LastActionDate: thisRow.bill_last_action_date,
+					LastAction:     thisRow.bill_last_action,
+					Title:          thisRow.bill_title,
+				},
+			})
+
+			// do something
+			// User.Watchlists.Bill
+		}
+
+		// Add .Debug() to the front of the chain to see debug stuff :)
+		// .Order("bills.last_action_date DESC")
+		// db.Debug().Preload("Watchlists.Bill").Order("bills.last_action_date desc").Preload(clause.Associations).Find(&users)
+		//db.Debug().Preload("Watchlists.Bill", func(db *gorm.DB) *gorm.DB {
+		//	return db.Order("bills.last_action_date DESC")
+		//}).Find(&users)
+		// db.Debug().Table("users").Preload(clause.Associations).Select("users.*, bills.*, watchlists.stance").Joins("JOIN watchlists on users.id = watchlists.user_id AND watchlists.deleted_at IS NULL").Joins("JOIN bills on watchlists.bill_id = bills.id").Order("bills.last_action_date desc").Find(&users)
+
+		fmt.Println("howdy")
+		fmt.Println(maps.Values(knownUserIds))
 		c.HTML(http.StatusOK, "users.tmpl", gin.H{
 			"User":  user,
-			"Users": users,
+			"Users": maps.Values(knownUserIds),
 			"Title": "Nebraska 2021-2022 Regular Session 107th Legislature",
 		})
 	})
