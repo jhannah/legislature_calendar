@@ -18,6 +18,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var title = "Nebraska 2023-2024 Regular Session 108th Legislature"
+
 type Bill struct {
 	gorm.Model
 	ID             int
@@ -94,7 +96,7 @@ func main() {
 		}
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"User":          u,
-			"Title":         "Nebraska 2023-2024 Regular Session 108th Legislature",
+			"Title":         title,
 			"AllBills":      allBills,
 			"MyBills":       myBills,
 			"RowsAffected1": result1.RowsAffected,
@@ -246,7 +248,7 @@ func main() {
 		c.HTML(http.StatusOK, "users.tmpl", gin.H{
 			"User":  user,
 			"Users": users,
-			"Title": "Nebraska 2021-2022 Regular Session 107th Legislature",
+			"Title": title,
 		})
 	})
 
