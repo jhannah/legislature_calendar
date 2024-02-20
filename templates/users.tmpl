@@ -23,7 +23,7 @@
     {{ range .Watchlists }}
       <tr>
         <td><a href="{{ .Bill.URL }}">{{ .Bill.Number }}</a></td>
-        <td>{{ .Stance }}</td>
+        <td class="stance stance-{{ .Stance }}"></td>
         <td>{{ .Bill.Status }}</td>
         <td>{{ .Bill.LastActionDate }}</td>
         <td>
