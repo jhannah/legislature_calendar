@@ -25,6 +25,7 @@ type Bill struct {
 	ID             int
 	SessionID      int
 	Number         string
+	NumberNumeric  int
 	Status         string
 	LastActionDate string
 	LastAction     string
@@ -75,7 +76,8 @@ func main() {
 	}
 	var allBills []Bill
 	// Add .Limit(5) to the front of the chain to see less data
-	result1 := db.Order("last_action_date desc").Find(&allBills)
+	// Add .Debug() to the front of the chain to see debug stuff :)
+	result1 := db.Order("last_action_date DESC, number_numeric ASC").Find(&allBills)
 
 	router.GET("/", func(c *gin.Context) {
 		var myBills []MyBill
@@ -83,8 +85,7 @@ func main() {
 		var u User
 		userID, _ := c.Cookie("userID")
 		if userID != "" {
-			// Add .Debug() to the front of the chain to see debug stuff :)
-			result2 = db.Order("last_action_date desc").Table("bills").Select("bills.*, watchlists.stance").Joins(
+			result2 = db.Order("last_action_date DESC, number_numeric ASC").Table("bills").Select("bills.*, watchlists.stance").Joins(
 				"JOIN watchlists on watchlists.bill_id = bills.id AND watchlists.user_id = ? AND watchlists.deleted_at IS NULL",
 				userID,
 			).Find(&myBills)
@@ -210,7 +211,10 @@ func main() {
 			FROM users
 			JOIN watchlists on watchlists.user_id = users.id
 			JOIN bills on watchlists.bill_id = bills.id
-			ORDER BY users.name ASC, bills.last_action_date DESC
+			WHERE users.deleted_at IS NULL
+			AND watchlists.deleted_at IS NULL
+			AND bills.deleted_at IS NULL
+			ORDER BY users.name ASC, bills.last_action_date DESC, bills.number_numeric ASC
 			;
 		`
 		var user_id int

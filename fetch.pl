@@ -38,8 +38,8 @@ delete $masterList->{masterlist}->{session};
 my $dbh = DBI->connect("dbi:SQLite:dbname=$dbname","","");
 $dbh->do("DELETE from bills");
 my $strsql = <<EOT;
-INSERT INTO bills (id, session_id, number, status, last_action_date, last_action, title, url)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+INSERT INTO bills (id, session_id, number, number_numeric, status, last_action_date, last_action, title, url)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 EOT
 my $sth = $dbh->prepare($strsql);
 
@@ -49,10 +49,13 @@ foreach my $bill (sort { $b->{last_action_date} cmp $a->{last_action_date} } @ml
   unless ($status{$bill->{status}}) {
     die "What does status $bill->{status} mean? $bill->{number}";
   }
+  my $number_numeric = $bill->{number};
+  $number_numeric =~ s/[^0-9]//g;
   $sth->execute(
     $bill->{bill_id},
     $session_id,
     $bill->{number},
+    $number_numeric,
     $status{$bill->{status}},
     $bill->{last_action_date},
     $bill->{last_action},
