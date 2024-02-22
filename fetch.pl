@@ -18,8 +18,28 @@ my %status = (
 # API docs: https://legiscan.com/gaits/documentation/legiscan
 # Get session list:
 #   https://api.legiscan.com/?key=ad1ae3b54176acb67c2d7d5082c805a5&op=getSessionList&state=NE
-# Get all bills for session 1810:
-#   https://api.legiscan.com/?key=ad1ae3b54176acb67c2d7d5082c805a5&op=getMasterList&id=1810
+# Get all bills for session 2028:
+#   https://api.legiscan.com/?key=ad1ae3b54176acb67c2d7d5082c805a5&op=getMasterList&id=2028
+# Get list of people:
+#   https://api.legiscan.com/?key=ad1ae3b54176acb67c2d7d5082c805a5&op=getSessionPeople&id=2028
+
+# echo ".mode csv\n.import experiments/CSV_experiments/NE/2023-2024_108th_Legislature/csv/people.csv    people"    | sqlite3 leg.sqlite3
+# echo ".mode csv\n.import experiments/CSV_experiments/NE/2023-2024_108th_Legislature/csv/votes.csv     votes"     | sqlite3 leg.sqlite3
+# echo ".mode csv\n.import experiments/CSV_experiments/NE/2023-2024_108th_Legislature/csv/rollcalls.csv rollcalls" | sqlite3 leg.sqlite3
+
+# https://antonz.org/sqlite-pivot-table/
+my $debug_sql = <<EOT;
+  SELECT
+    people.name,
+    COUNT(*) FILTER (WHERE votes.vote_desc = 'Yea') AS "Yea",
+    COUNT(*) FILTER (WHERE votes.vote_desc = 'Nay') AS "Nay",
+    COUNT(*) FILTER (WHERE votes.vote_desc = 'NV') AS "NV",
+    COUNT(*) FILTER (WHERE votes.vote_desc = 'Absent') AS "Absent"
+  FROM people
+  JOIN votes ON votes.people_id = people.people_id
+  GROUP BY 1
+  ORDER BY "Yea" + "Nay" DESC;
+EOT
 
 my $ua = LWP::UserAgent->new;
 my $base_url = "https://api.legiscan.com/?key=$api_key";
