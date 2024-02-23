@@ -197,21 +197,32 @@ func main() {
 		db.Where("id = ?", intUserID).Find(&user)
 		var users []User
 
-		// So here's our original one-liner version, which magically cascades to all our tables,
-		// but we're unhappy with the sub-sorting so we do more complicated things:
-		// db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
+		/*
+			1) So here's our original one-liner version, which magically cascades to all our tables,
+			but we're unhappy with the sub-sorting so we do more complicated things:
+			db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
 
-		// https://gorm.io/docs/preload.html#Custom-Preloading-SQL
-		// This also doesn't work because GORM's not sorting the watchlists (per the bills fields)
-		// it sorts the bills. But we don't iterate the bills, we iterate the watchlists.
-		// db.Debug().Preload("Watchlists.Bill", func(db *gorm.DB) *gorm.DB {
-		//   return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
-		// }).Order("users.name ASC").Find(&users)
+			2) https://gorm.io/docs/preload.html#Custom-Preloading-SQL
+			This also doesn't work because GORM's not sorting the watchlists (per the bills fields)
+			it sorts the bills. But we don't iterate the bills, we iterate the watchlists.
+			db.Debug().Preload("Watchlists.Bill", func(db *gorm.DB) *gorm.DB {
+				return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
+			}).Order("users.name ASC").Find(&users)
 
-		// And this tries to work but fails on the backend: no such column: bills.last_action_date
-		// db.Debug().Preload("Watchlists", func(db *gorm.DB) *gorm.DB {
-		//   return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
-		// }).Order("users.name ASC").Find(&users)
+			And this tries to work but fails on the backend: no such column: bills.last_action_date
+			db.Debug().Preload("Watchlists", func(db *gorm.DB) *gorm.DB {
+				return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
+			}).Order("users.name ASC").Find(&users)
+
+			3) https://stackoverflow.com/a/67078725
+			And this rumor is fascinating, but I can't get any variation of this to work either:
+			db.Debug().Model(&User{}).
+				Order("users.name ASC").
+				Joins("Watchlists").
+				Joins("Bills").
+				Order("bills.last_action_date DESC, bills.number_numeric ASC").
+				Find(&users)
+		*/
 
 		var sqlStr string
 		knownUserIds := make(map[int]User)
