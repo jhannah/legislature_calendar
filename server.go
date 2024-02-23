@@ -201,12 +201,24 @@ func main() {
 		// but we're unhappy with the sub-sorting so we do more complicated things:
 		// db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
 
+		// https://gorm.io/docs/preload.html#Custom-Preloading-SQL
+		// This also doesn't work because GORM's not sorting the watchlists (per the bills fields)
+		// it sorts the bills. But we don't iterate the bills, we iterate the watchlists.
+		// db.Debug().Preload("Watchlists.Bill", func(db *gorm.DB) *gorm.DB {
+		//   return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
+		// }).Order("users.name ASC").Find(&users)
+
+		// And this tries to work but fails on the backend: no such column: bills.last_action_date
+		// db.Debug().Preload("Watchlists", func(db *gorm.DB) *gorm.DB {
+		//   return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
+		// }).Order("users.name ASC").Find(&users)
+
 		var sqlStr string
 		knownUserIds := make(map[int]User)
 		sqlStr = `
 			SELECT users.id, users.name, users.url,
 				bills.url, bills.number,
-			  watchlists.stance,
+				watchlists.stance,
 				bills.last_action_date, bills.last_action, bills.title
 			FROM users
 			JOIN watchlists on watchlists.user_id = users.id
@@ -215,7 +227,6 @@ func main() {
 			AND watchlists.deleted_at IS NULL
 			AND bills.deleted_at IS NULL
 			ORDER BY users.name ASC, bills.last_action_date DESC, bills.number_numeric ASC
-			;
 		`
 		var user_id int
 		var user_name, user_url, bill_url, bill_number, watchlist_stance, bill_last_action_date, bill_last_action, bill_title string
@@ -249,6 +260,7 @@ func main() {
 			knownUserIds[user_id] = thisUser
 			users[user_index-1] = thisUser
 		}
+
 		c.HTML(http.StatusOK, "users.tmpl", gin.H{
 			"User":  user,
 			"Users": users,
