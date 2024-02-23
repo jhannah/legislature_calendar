@@ -198,8 +198,8 @@ func main() {
 		var users []User
 
 		/*
-			1) So here's our original one-liner version, which magically cascades to all our tables,
-			but we're unhappy with the sub-sorting so we do more complicated things:
+			1) So here's our original one-liner GORM version, which magically cascades to all our tables.
+			But we're unhappy with the sub-sorting. So we try more complicated things below.
 			db.Debug().Preload("Watchlists.Bill").Preload(clause.Associations).Find(&users)
 
 			2) https://gorm.io/docs/preload.html#Custom-Preloading-SQL
