@@ -209,19 +209,22 @@ func main() {
 				return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
 			}).Order("users.name ASC").Find(&users)
 
-			And this tries to work but fails on the backend: no such column: bills.last_action_date
+			3) And this variation tries to work but fails on the backend: no such column: bills.last_action_date
 			db.Debug().Preload("Watchlists", func(db *gorm.DB) *gorm.DB {
 				return db.Order("bills.last_action_date DESC, bills.number_numeric ASC")
 			}).Order("users.name ASC").Find(&users)
 
-			3) https://stackoverflow.com/a/67078725
-			And this rumor is fascinating, but I can't get any variation of this to work either:
+			4) https://stackoverflow.com/a/67078725
+			And this rumor is fascinating, but I can't get any variation of this to work either.
+			All variations I've tried either runtime explode Golang, or generate invalid SQL that SQLite rejects.
 			db.Debug().Model(&User{}).
 				Order("users.name ASC").
 				Joins("Watchlists").
 				Joins("Bills").
 				Order("bills.last_action_date DESC, bills.number_numeric ASC").
 				Find(&users)
+
+			So... we'll write 50 lines of our own code. -sigh-
 		*/
 
 		var sqlStr string
