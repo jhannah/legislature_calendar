@@ -17,6 +17,7 @@
     const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
+    const billWidth = 4
   
     function getEase(currentProgress, start, distance, steps, power) {
       currentProgress /= steps/2;
@@ -44,13 +45,13 @@
     function addBill(params) {
       let name = params.name;
       ctx.fillStyle = "blue";
-      ctx.fillRect(getX(params), getY(params), 4, 4);
+      ctx.clearRect(getX(params) -1, getY(params) -1, billWidth + 2, billWidth + 2);
       console.debug("you drew a rect");
       if (params.frame < params.frames) {
         params.frame = params.frame + 1;
-        //window.requestAnimationFrame(drawCanvas);
         window.requestAnimationFrame(addBill.bind(null, params))
       }
+      ctx.fillRect(getX(params), getY(params), billWidth, billWidth);
     }
   
     function drawCanvas() {
