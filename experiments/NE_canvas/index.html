@@ -20,8 +20,8 @@
   <canvas id="backgroundCanvas" width=300 height=300></canvas>
   <canvas id="billCanvas" width=300 height=300></canvas>
 
+  <script type="text/javascript" src="committees.js"></script> 
   <script type="text/javascript">
-    console.debug("hi");
     // Starting point: https://css-tricks.com/easing-animations-in-canvas/
     const backgroundCanvas = document.getElementById('backgroundCanvas');
     const canvasWidth = backgroundCanvas.width;
@@ -33,7 +33,10 @@
     backgroundCtx.font = "14px sanserif";
     backgroundCtx.fillText("Introduced", 5, 20);
     const billWidth = 4;
-  
+
+    for (const c of committees) {
+      console.log(c);
+    }
     // Robert Penner’s "Flash easing functions"
     function getEase(currentProgress, start, distance, steps, power) {
       currentProgress /= steps/2;
@@ -71,6 +74,7 @@
     }
   
     function drawCanvas() {
+      billCtx.clearRect(0, 0, canvasWidth, canvasHeight);
       //billCtx.fillStyle = 'rgb(255,255,255)';
       //billCtx.fillRect(0, 0, billCanvas.width, billCanvas.height);
     }
