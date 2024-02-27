@@ -17,10 +17,6 @@
     const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const billName = 'LB1';
-    const billWidth = 4;
-    const billPadding = 10;
-    let billsCanvas = {};
   
     function getEase(currentProgress, start, distance, steps, power) {
       currentProgress /= steps/2;
@@ -47,26 +43,12 @@
   
     function addBill(params) {
       let name = params.name;
-      if (billsCanvas[name] === undefined) {
-        billsCanvas[name] = document.createElement('canvas');
-      }
-      billsCanvas[name].width = billWidth;
-      // billsCanvas[name].height = cardHeight;
-  
-      //let image = document.getElementById(name);
-      let ctx = billsCanvas[name].getContext('2d');
-      //billCtx.clearRect(0, 0, billWidth, billWidth);
-      //billCtx.drawImage(image, 0, 0, cardWidth, cardHeight);
-      ctx.lineWidth   = 2;
-      ctx.strokeStyle = "red";
-      ctx.strokeRect(10, 10, 100, 100);
       ctx.fillStyle = "blue";
-      ctx.fillRect(10, 10, 100, 100);
+      ctx.fillRect(getX(params), getY(params), 4, 4);
       console.debug("you drew a rect");
-      //context.drawImage(billsCanvas[name], getX(params), getY(params));
       if (params.frame < params.frames) {
         params.frame = params.frame + 1;
-        window.requestAnimationFrame(drawCanvas);
+        //window.requestAnimationFrame(drawCanvas);
         window.requestAnimationFrame(addBill.bind(null, params))
       }
     }
@@ -77,16 +59,24 @@
     }
   
     function play() {
-      console.debug("welcome to play");
-      drawCanvas();  
+      drawCanvas();
       addBill({
         name: 'LB1',
         frame: 0,
         frames: 100,
-        xFrom: billPadding,
-        xTo: canvasWidth - billWidth - billPadding,
-        yFrom: billPadding,
-        yTo: canvasHeight - billWidth - billPadding
+        xFrom: 10,
+        xTo: 290,
+        yFrom: 10,
+        yTo: 290
+      });
+      addBill({
+        name: 'LB2',
+        frame: 0,
+        frames: 100,
+        xFrom: 150,
+        xTo: 70,
+        yFrom: 50,
+        yTo: 200
       });
     }
   
