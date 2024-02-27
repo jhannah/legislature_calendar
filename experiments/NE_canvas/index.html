@@ -3,22 +3,38 @@
 <head>
   <title>NE bills</title>
   <meta charset="utf-8">
+  <style>
+    canvas {
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: black;
+    }
+  </style>
 </head>
 <body>
 
   <button onclick="javascript:play()">Play</button><br>
-  <canvas id="canvas" width="300" height="300"></canvas>
-  <img src="https://solitaired.com/images/style-classic-2/heart_13.png" width="201" height="289" id="heart_13" style="display:none;">
+  <canvas id="backgroundCanvas" width=300 height=300></canvas>
+  <canvas id="billCanvas" width=300 height=300></canvas>
 
   <script type="text/javascript">
     console.debug("hi");
     // Starting point: https://css-tricks.com/easing-animations-in-canvas/
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-    const billWidth = 4
+    const backgroundCanvas = document.getElementById('backgroundCanvas');
+    const canvasWidth = backgroundCanvas.width;
+    const canvasHeight = backgroundCanvas.height;
+    console.log("width " + canvasWidth + " height " + canvasHeight)
+    const backgroundCtx = backgroundCanvas.getContext('2d');
+    const billCanvas = document.getElementById('billCanvas');
+    const billCtx = billCanvas.getContext('2d');
+    backgroundCtx.font = "14px sanserif";
+    backgroundCtx.fillText("Introduced", 5, 20);
+    const billWidth = 4;
   
+    // Robert Penner’s "Flash easing functions"
     function getEase(currentProgress, start, distance, steps, power) {
       currentProgress /= steps/2;
       if (currentProgress < 1) {
@@ -44,19 +60,19 @@
   
     function addBill(params) {
       let name = params.name;
-      ctx.fillStyle = "blue";
-      ctx.clearRect(getX(params) -1, getY(params) -1, billWidth + 2, billWidth + 2);
+      billCtx.fillStyle = "blue";
+      billCtx.clearRect(getX(params) -1, getY(params) -1, billWidth + 2, billWidth + 2);
       console.debug("you drew a rect");
       if (params.frame < params.frames) {
         params.frame = params.frame + 1;
         window.requestAnimationFrame(addBill.bind(null, params))
       }
-      ctx.fillRect(getX(params), getY(params), billWidth, billWidth);
+      billCtx.fillRect(getX(params), getY(params), billWidth, billWidth);
     }
   
     function drawCanvas() {
-      ctx.fillStyle = 'rgb(255,255,255)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      //billCtx.fillStyle = 'rgb(255,255,255)';
+      //billCtx.fillRect(0, 0, billCanvas.width, billCanvas.height);
     }
   
     function play() {
