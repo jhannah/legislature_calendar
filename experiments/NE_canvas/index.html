@@ -19,8 +19,8 @@
 <body>
 
   <button onclick="javascript:play()">Play</button><br>
-  <canvas id="backgroundCanvas" width=300 height=300></canvas>
-  <canvas id="billCanvas" width=300 height=300></canvas>
+  <canvas id="backgroundCanvas" width=1200 height=300></canvas>
+  <canvas id="billCanvas"       width=1200 height=300></canvas>
 
   <script type="text/javascript">
     // Starting point: https://css-tricks.com/easing-animations-in-canvas/
@@ -35,11 +35,9 @@
     backgroundCtx.fillText("Introduced", 5, 20);
     const billWidth = 4;
 
-    y = 60;
     for (const c of committees) {
-      console.log(c);
-      backgroundCtx.fillText(c, 5, y);
-      y += 40;
+      console.log(c.name);
+      backgroundCtx.fillText(c.name, c.x, c.y);
     }
 
     window.onload = play;
