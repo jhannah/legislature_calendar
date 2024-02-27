@@ -35,10 +35,13 @@
     backgroundCtx.fillText("Introduced", 5, 20);
     const billWidth = 4;
 
+    y = 60;
     for (const c of committees) {
       console.log(c);
+      backgroundCtx.fillText(c, 5, y);
+      y += 40;
     }
-    
+
     window.onload = play;
   </script> 
 
