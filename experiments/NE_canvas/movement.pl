@@ -27,6 +27,10 @@ $sth->execute;
 my %stacks;
 
 while (my $row = $sth->fetchrow_hashref) {
+  if ($row->{number} eq "LB1") {
+    say "LB1 [" . $row->{action} . "]";
+  }
+  $row->{action} =~ s/Date of introduction/Introduced/;
   $row->{action} =~ s/Referred to (the )?//;
   $row->{action} =~ s/ Committee$//;
   push @{$stacks{$row->{action}}}, $row->{number};
@@ -61,12 +65,20 @@ my $bills;
 foreach my $committee (keys %stacks) {
   foreach my $bill (@{$stacks{$committee}}) {
     # say "$committee $bill";
-    if ($committee eq "Date of introduction") {
-      $bills->{$bill}->{xFrom} = $nextX->{$committee};
-      $bills->{$bill}->{yFrom} = $committee->{$committee}->{nextY};
+    if ($committee eq "Introduced") {
+      $bills->{$bill}->{xFrom} = $committees->{$committee}->{nextX};
+      $bills->{$bill}->{yFrom} = $committees->{$committee}->{nextY};
+    } else {
+      $bills->{$bill}->{xTo} = $committees->{$committee}->{nextX};
+      $bills->{$bill}->{yTo} = $committees->{$committee}->{nextY};
     }
-    $nextX->{$committee} += 5;
+    $committees->{$committee}->{nextX} += 5;
   }
 }
 
+{
+  open my $fh, ">", "bills.json";
+  print $fh JSON::XS->new->pretty(1)->encode($bills);
+}
 p $bills;
+p $committees;
