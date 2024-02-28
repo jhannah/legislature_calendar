@@ -16,7 +16,6 @@
       border-color: black;
     }
   </style>
-  <script type="text/javascript" src="committees.js"></script> 
   <script type="text/javascript" src="canvas.js"></script> 
 </head>
 <body>
@@ -26,6 +25,24 @@
   <canvas id="billCanvas"       width=1200 height=300></canvas>
 
   <script type="text/javascript">
+    async function loadCommittees() {
+      var resp = fetch("./committees.json");
+      var r = resp.json();
+      return r;
+    }
+    async function loadBills() {
+      var resp = await fetch("./bills.json");
+      var r = await resp.json();
+      return r;
+    }
+    var committees = loadCommittees();
+    var bills = loadBills();
+    //committees = committees[0];
+    console.log("before");
+    console.log(committees);
+    console.log(bills);
+    console.log("after");
+
     // Starting point: https://css-tricks.com/easing-animations-in-canvas/
     const backgroundCanvas = document.getElementById('backgroundCanvas');
     const canvasWidth = backgroundCanvas.width;
@@ -38,7 +55,7 @@
     backgroundCtx.fillText("Introduced", 5, 20);
     const billWidth = 4;
 
-    for (const c of committees) {
+    for (let c of committees) {
       console.log(c.name);
       backgroundCtx.fillText(c.name, c.x, c.y);
     }

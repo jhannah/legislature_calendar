@@ -5,10 +5,13 @@ use Data::Printer array_max => 3;
 use JSON::XS;
 
 my $dbname = "../../leg.sqlite3";
+my $committees_json_file = "committees.json";
+my $bills_json_file = "bills.json";
 
 # sqlite3 leg.sqlite3
 # .tables
 # .schema bills
+say "Connecting to $dbname...";
 my $dbh = DBI->connect("dbi:SQLite:dbname=$dbname","","");
 my $strsql = <<EOT;
 SELECT bills.number, date, action
@@ -27,9 +30,9 @@ $sth->execute;
 my %stacks;
 
 while (my $row = $sth->fetchrow_hashref) {
-  if ($row->{number} eq "LB1") {
-    say "LB1 [" . $row->{action} . "]";
-  }
+  # if ($row->{number} eq "LB1") {
+  #   say "LB1 [" . $row->{action} . "]";
+  # }
   $row->{action} =~ s/Date of introduction/Introduced/;
   $row->{action} =~ s/Referred to (the )?//;
   $row->{action} =~ s/ Committee$//;
@@ -44,12 +47,13 @@ while (my $row = $sth->fetchrow_hashref) {
 my $nextX;
 my $json_str;
 {
+  say "Reading from $committees_json_file...";
   local $/; # Enable 'slurp' mode
-  open my $fh, "<", "committees.json";
+  open my $fh, "<", $committees_json_file;
   $json_str = <$fh>;
 }
 my $json_committees = decode_json($json_str);
-p $json_committees;
+# p $json_committees;
 my $committees = {};
 foreach my $committee (@$json_committees) {
   # say $committee->{name};
@@ -58,7 +62,7 @@ foreach my $committee (@$json_committees) {
     nextY => $committee->{y} + 20,  # 20 to drop below the text
   };
 }
-p $committees;
+# p $committees;
 
 # Now that we have the ordered stacks, let's calculate xFrom, xTo, yFrom, yTo
 my $bills;
@@ -77,8 +81,9 @@ foreach my $committee (keys %stacks) {
 }
 
 {
-  open my $fh, ">", "bills.json";
+  say "Writing $bills_json_file...";
+  open my $fh, ">", $bills_json_file;
   print $fh JSON::XS->new->pretty(1)->encode($bills);
 }
-p $bills;
-p $committees;
+# p $bills;
+# p $committees;
