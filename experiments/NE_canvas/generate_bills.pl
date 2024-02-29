@@ -59,7 +59,7 @@ foreach my $committee (@$json_committees) {
   # say $committee->{name};
   $committees->{$committee->{name}} = {
     nextX => $committee->{x},
-    nextY => $committee->{y} + 20,  # 20 to drop below the text
+    nextY => $committee->{y} + 10,  # 10 to drop below the text
   };
 }
 # p $committees;

@@ -57,37 +57,25 @@ function addBill(params) {
 
 function drawCanvas() {
   billCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-  // billCtx.fillStyle = 'rgb(255,255,255)';
-  // billCtx.fillRect(0, 0, billCanvas.width, billCanvas.height);
-}
-
-function play(committees, bills) {
+  backgroundCtx.clearRect(0, 0, canvasWidth, canvasHeight);
+  //billCtx.fillStyle = 'rgb(255,255,255)';
+  //billCtx.fillRect(0, 0, billCanvas.width, billCanvas.height);
   for (c of committees) {
     backgroundCtx.fillText(c.name, c.x, c.y);
   }
+}
 
+function play_again() {
+//  drawCanvas();
+  play(committees, bills);
+}
+
+function play(c, b) {
+  committees = c;
+  bills = b;
   drawCanvas();
-  addBill({
-    name: 'LB1',
-    frame: 0,
-    frames: 100,
-    xFrom: 10,
-    xTo: 290,
-    yFrom: 10,
-    yTo: 290
-  });
-  addBill({
-    name: 'LB2',
-    frame: 0,
-    frames: 100,
-    xFrom: 150,
-    xTo: 70,
-    yFrom: 50,
-    yTo: 200
-  });
-  console.log(typeof(bills));
-  console.log(bills);
-  var cnt = 0;
+  // console.log(bills);
+  // var cnt = 0;
   for (const [number, bill] of Object.entries(bills)) {
     addBill({
       name: number,
@@ -98,9 +86,9 @@ function play(committees, bills) {
       yFrom: bill.yFrom,
       yTo: bill.yTo
     });
-    cnt += 1;
-    if (cnt == 20) {
-      break;   // abort, that's enough bills
-    }
+    // cnt += 1;
+    // if (cnt == 20) {
+    //   break;   // abort, that's enough bills
+    // }
   }
 }
