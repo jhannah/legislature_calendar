@@ -3,6 +3,7 @@ var backgroundCtx, billCtx;
 var committees, dates;
 var canvasWidth, canvasHeight;
 var billWidth = 4;
+var reqAnimationId;
 
 function setupGlobals(document) {
   // Starting point: https://css-tricks.com/easing-animations-in-canvas/
@@ -31,15 +32,15 @@ function getEase(currentProgress, start, distance, steps, power) {
 
 function getX(params) {
   let distance = params.xTo - params.xFrom;
-  let steps = params.frames;
-  let currentProgress = params.frame;
+  let steps = params.end_frame - params.start_frame;
+  let currentProgress = params.frame - params.start_frame;
   return getEase(currentProgress, params.xFrom, distance, steps, 3);
 }
 
 function getY(params) {
   let distance = params.yTo - params.yFrom;
-  let steps = params.frames;
-  let currentProgress = params.frame;
+  let steps = params.end_frame - params.start_frame;
+  let currentProgress = params.frame - params.start_frame;
   return getEase(currentProgress, params.yFrom, distance, steps, 3);
 }
 
@@ -48,9 +49,10 @@ function addBill(params) {
   billCtx.fillStyle = "blue";
   billCtx.clearRect(getX(params) -1, getY(params) -1, billWidth + 2, billWidth + 2);
   //console.log("you drew a rect");
-  if (params.frame < params.frames) {
+  if (params.frame < params.end_frame) {
     params.frame = params.frame + 1;
-    window.requestAnimationFrame(addBill.bind(null, params))
+    console.log("requesting frame " + params.frame)
+    reqAnimationId = window.requestAnimationFrame(addBill.bind(null, params))
   }
   billCtx.fillRect(getX(params), getY(params), billWidth, billWidth);
 }
@@ -73,13 +75,15 @@ function play(c, d) {
   committees = c;
   dates = d;
   //for (const date in Object.keys(dates)) {
+  start_frame = 0;
   for (const date in dates) {
     console.log(date);
-    play_date(date);
+    play_date(date, start_frame);
+    start_frame += 100;
   }
 }
 
-function play_date(date) {
+function play_date(date, start_frame) {
   drawCanvas();
   // var cnt = 0;
   movements = dates[date]["movements"];
@@ -89,8 +93,9 @@ function play_date(date) {
     // console.log("  " + number + " " + coords.xFrom);
     addBill({
       name: number,
-      frame: 0,
-      frames: 100,
+      start_frame: start_frame,
+      frame: start_frame,
+      end_frame: start_frame + 100,
       xFrom: coords.xFrom,
       xTo: coords.xTo,
       yFrom: coords.yFrom,
