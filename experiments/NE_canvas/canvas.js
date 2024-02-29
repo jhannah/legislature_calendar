@@ -66,7 +66,6 @@ function drawCanvas() {
 }
 
 function play_again() {
-//  drawCanvas();
   play(committees, dates);
 }
 
@@ -102,4 +101,5 @@ function play_date(date) {
     //   break;   // abort, that's enough dates
     // }
   }
+  console.log("all addBill() calls complete");
 }
