@@ -1,17 +1,17 @@
 var backgroundCanvas, billCanvas;
 var backgroundCtx, billCtx;
-var committees, bills;
+var committees, dates;
 var canvasWidth, canvasHeight;
 var billWidth = 4;
 
 function setupGlobals(document) {
   // Starting point: https://css-tricks.com/easing-animations-in-canvas/
   backgroundCanvas = document.getElementById('backgroundCanvas');
-  console.log(backgroundCanvas);
+  // console.log(backgroundCanvas);
 
   canvasWidth = backgroundCanvas.width;
   canvasHeight = backgroundCanvas.height;
-  console.log("width " + canvasWidth + " height " + canvasHeight)
+  // console.log("width " + canvasWidth + " height " + canvasHeight)
   backgroundCtx = backgroundCanvas.getContext('2d');
   billCanvas = document.getElementById('billCanvas');
   billCtx = billCanvas.getContext('2d');
@@ -47,7 +47,7 @@ function addBill(params) {
   let name = params.name;
   billCtx.fillStyle = "blue";
   billCtx.clearRect(getX(params) -1, getY(params) -1, billWidth + 2, billWidth + 2);
-  console.debug("you drew a rect");
+  //console.log("you drew a rect");
   if (params.frame < params.frames) {
     params.frame = params.frame + 1;
     window.requestAnimationFrame(addBill.bind(null, params))
@@ -67,28 +67,39 @@ function drawCanvas() {
 
 function play_again() {
 //  drawCanvas();
-  play(committees, bills);
+  play(committees, dates);
 }
 
-function play(c, b) {
+function play(c, d) {
   committees = c;
-  bills = b;
+  dates = d;
+  //for (const date in Object.keys(dates)) {
+  for (const date in dates) {
+    console.log(date);
+    play_date(date);
+  }
+}
+
+function play_date(date) {
   drawCanvas();
-  // console.log(bills);
   // var cnt = 0;
-  for (const [number, bill] of Object.entries(bills)) {
+  movements = dates[date]["movements"];
+  //console.log(typeof(movements));
+  for (const number in movements) {
+    coords = movements[number];
+    // console.log("  " + number + " " + coords.xFrom);
     addBill({
       name: number,
       frame: 0,
       frames: 100,
-      xFrom: bill.xFrom,
-      xTo: bill.xTo,
-      yFrom: bill.yFrom,
-      yTo: bill.yTo
+      xFrom: coords.xFrom,
+      xTo: coords.xTo,
+      yFrom: coords.yFrom,
+      yTo: coords.yTo
     });
     // cnt += 1;
     // if (cnt == 20) {
-    //   break;   // abort, that's enough bills
+    //   break;   // abort, that's enough dates
     // }
   }
 }

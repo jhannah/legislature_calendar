@@ -29,7 +29,7 @@
     async function loadJSONs() {
       const allPromise = Promise.all([
         fetch("./committees.json").then(resp => resp.json()),
-        fetch("./bills.json").then(resp => resp.json()),
+        fetch("./dates.json").then(resp => resp.json()),
       ]).then(resp => play(resp[0], resp[1]));
     }
     loadJSONs();

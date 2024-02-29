@@ -1,0 +1,1602 @@
+{
+   "2023-01-05" : {
+      "movements" : {
+         "LB1" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 680,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB10" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 550,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB11" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 765,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB12" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 585,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB13" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 625,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB14" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 815,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB15" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 655,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB16" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 740,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB17" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 750,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB18" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 615,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB19" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 775,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB2" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 535,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB20" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 760,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB21" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 730,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB22" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 780,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB23" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 795,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB24" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 685,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB25" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 565,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB26" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 790,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB27" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 715,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB28" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 580,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB29" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 555,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB3" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 770,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB30" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 560,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB31" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 800,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB32" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 590,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB33" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 650,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB34" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 805,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB35" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 810,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB36" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 720,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB37" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 515,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB38" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 605,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB39" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 540,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB4" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 525,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB40" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 575,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB41" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 695,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB42" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 690,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB43" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 670,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB44" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 675,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB45" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 660,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB46" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 610,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB47" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 745,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB48" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 530,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB49" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 665,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB5" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 700,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB50" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 635,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB51" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 725,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB52" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 620,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB53" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 600,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB54" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 735,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB55" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 645,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB56" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 545,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB57" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 630,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB58" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 595,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB59" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 710,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB6" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 570,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB60" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 785,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB61" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 705,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB62" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 510,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB63" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 970,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB64" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 840,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB65" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 955,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB66" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 910,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB67" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 920,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB68" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 825,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB69" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 880,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB7" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 755,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB70" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 860,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB71" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 925,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB72" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 855,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB73" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 960,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB74" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 995,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB75" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 875,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB76" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 845,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB77" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 950,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB78" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 835,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB79" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 870,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB8" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 640,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB80" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 830,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB81" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 820,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB82" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 975,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB83" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 990,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB84" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 850,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB85" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 905,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB86" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 935,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB87" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 985,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB88" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 890,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB89" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 940,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB9" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 520,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB90" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 915,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB91" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 965,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR1CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 980,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR2CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 865,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR3CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 945,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR4CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 885,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR5" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 900,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR6CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 895,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR7CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 930,
+            "yFrom" : 0,
+            "yTo" : 26
+         }
+      },
+      "stacks" : {
+         "Introduced" : [
+            "LB62",
+            "LB37",
+            "LB9",
+            "LB4",
+            "LB48",
+            "LB2",
+            "LB39",
+            "LB56",
+            "LB10",
+            "LB29",
+            "LB30",
+            "LB25",
+            "LB6",
+            "LB40",
+            "LB28",
+            "LB12",
+            "LB32",
+            "LB58",
+            "LB53",
+            "LB38",
+            "LB46",
+            "LB18",
+            "LB52",
+            "LB13",
+            "LB57",
+            "LB50",
+            "LB8",
+            "LB55",
+            "LB33",
+            "LB15",
+            "LB45",
+            "LB49",
+            "LB43",
+            "LB44",
+            "LB1",
+            "LB24",
+            "LB42",
+            "LB41",
+            "LB5",
+            "LB61",
+            "LB59",
+            "LB27",
+            "LB36",
+            "LB51",
+            "LB21",
+            "LB54",
+            "LB16",
+            "LB47",
+            "LB17",
+            "LB7",
+            "LB20",
+            "LB11",
+            "LB3",
+            "LB19",
+            "LB22",
+            "LB60",
+            "LB26",
+            "LB23",
+            "LB31",
+            "LB34",
+            "LB35",
+            "LB14",
+            "LB81",
+            "LB68",
+            "LB80",
+            "LB78",
+            "LB64",
+            "LB76",
+            "LB84",
+            "LB72",
+            "LB70",
+            "LR2CA",
+            "LB79",
+            "LB75",
+            "LB69",
+            "LR4CA",
+            "LB88",
+            "LR6CA",
+            "LR5",
+            "LB85",
+            "LB66",
+            "LB90",
+            "LB67",
+            "LB71",
+            "LR7CA",
+            "LB86",
+            "LB89",
+            "LR3CA",
+            "LB77",
+            "LB65",
+            "LB73",
+            "LB91",
+            "LB63",
+            "LB82",
+            "LR1CA",
+            "LB87",
+            "LB83",
+            "LB74"
+         ]
+      }
+   },
+   "2023-01-06" : {
+      "movements" : {
+         "LB1" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 180,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB10" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 50,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB102" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 505,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB11" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 265,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB12" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 85,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB13" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 125,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB14" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 315,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB15" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 155,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB16" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 240,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB17" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 250,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB18" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 115,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB19" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 275,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB2" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 35,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB20" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 260,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB21" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 230,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB22" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 280,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB23" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 295,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB24" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 185,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB25" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 65,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB26" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 290,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB27" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 215,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB28" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 80,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB29" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 55,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB3" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 270,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB30" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 60,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB31" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 300,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB32" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 90,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB33" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 150,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB34" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 305,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB35" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 310,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB36" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 220,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB37" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 15,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB38" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 105,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB39" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 40,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB4" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 25,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB40" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 75,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB41" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 195,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB42" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 190,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB43" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 170,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB44" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 175,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB45" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 160,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB46" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 110,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB47" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 245,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB48" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 30,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB49" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 165,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB5" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 200,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB50" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 135,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB51" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 225,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB52" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 120,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB53" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 100,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB54" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 235,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB55" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 145,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB56" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 45,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB57" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 130,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB58" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 95,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB59" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 210,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB6" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 70,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB60" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 285,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB61" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 205,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB62" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 10,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB63" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 470,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB64" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 340,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB65" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 455,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB66" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 410,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB67" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 420,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB68" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 325,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB69" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 380,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB7" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 255,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB70" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 360,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB71" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 425,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB72" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 355,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB73" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 460,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB74" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 495,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB75" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 375,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB76" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 345,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB77" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 450,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB78" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 335,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB79" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 370,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB8" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 140,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB80" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 330,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB81" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 320,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB82" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 475,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB83" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 490,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB84" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 350,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB85" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 405,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB86" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 435,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB87" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 485,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB88" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 390,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB89" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 440,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB9" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 20,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB90" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 415,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB91" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 465,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LB92" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 500,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR1CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 480,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR2CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 365,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR3CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 445,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR4CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 385,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR5" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 400,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR6CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 395,
+            "yFrom" : 0,
+            "yTo" : 26
+         },
+         "LR7CA" : {
+            "rowFrom" : 1,
+            "xFrom" : 0,
+            "xTo" : 430,
+            "yFrom" : 0,
+            "yTo" : 26
+         }
+      },
+      "stacks" : {
+         "Introduced" : [
+            "LB62",
+            "LB37",
+            "LB9",
+            "LB4",
+            "LB48",
+            "LB2",
+            "LB39",
+            "LB56",
+            "LB10",
+            "LB29",
+            "LB30",
+            "LB25",
+            "LB6",
+            "LB40",
+            "LB28",
+            "LB12",
+            "LB32",
+            "LB58",
+            "LB53",
+            "LB38",
+            "LB46",
+            "LB18",
+            "LB52",
+            "LB13",
+            "LB57",
+            "LB50",
+            "LB8",
+            "LB55",
+            "LB33",
+            "LB15",
+            "LB45",
+            "LB49",
+            "LB43",
+            "LB44",
+            "LB1",
+            "LB24",
+            "LB42",
+            "LB41",
+            "LB5",
+            "LB61",
+            "LB59",
+            "LB27",
+            "LB36",
+            "LB51",
+            "LB21",
+            "LB54",
+            "LB16",
+            "LB47",
+            "LB17",
+            "LB7",
+            "LB20",
+            "LB11",
+            "LB3",
+            "LB19",
+            "LB22",
+            "LB60",
+            "LB26",
+            "LB23",
+            "LB31",
+            "LB34",
+            "LB35",
+            "LB14",
+            "LB81",
+            "LB68",
+            "LB80",
+            "LB78",
+            "LB64",
+            "LB76",
+            "LB84",
+            "LB72",
+            "LB70",
+            "LR2CA",
+            "LB79",
+            "LB75",
+            "LB69",
+            "LR4CA",
+            "LB88",
+            "LR6CA",
+            "LR5",
+            "LB85",
+            "LB66",
+            "LB90",
+            "LB67",
+            "LB71",
+            "LR7CA",
+            "LB86",
+            "LB89",
+            "LR3CA",
+            "LB77",
+            "LB65",
+            "LB73",
+            "LB91",
+            "LB63",
+            "LB82",
+            "LR1CA",
+            "LB87",
+            "LB83",
+            "LB74",
+            "LB92",
+            "LB102"
+         ]
+      }
+   }
+}

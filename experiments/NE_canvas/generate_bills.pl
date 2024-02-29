@@ -3,10 +3,11 @@ use 5.38.0;
 use DBD::SQLite;
 use Data::Printer array_max => 3;
 use JSON::XS;
+use Clone 'clone';
 
 my $dbname = "../../leg.sqlite3";
 my $committees_json_file = "committees.json";
-my $bills_json_file = "bills.json";
+my $dates_json_file = "dates.json";
 
 # sqlite3 leg.sqlite3
 # .tables
@@ -22,13 +23,14 @@ WHERE (
   action like 'Referred to%'
 )
 ORDER BY date, bill_id, sequence
+LIMIT 100
 EOT
 my $sth = $dbh->prepare($strsql);
 $sth->execute;
 
-# Create stacks we'll assign x,y values to once we have all the stacks.
-my %stacks;
-
+my $dates;   # Sets of bill movements per date
+  # ->{$date}->{stacks}  # How many rows/columns of bills are in play for any given committee on any given date
+my $prev_date;
 while (my $row = $sth->fetchrow_hashref) {
   # if ($row->{number} eq "LB1") {
   #   say "LB1 [" . $row->{action} . "]";
@@ -36,12 +38,19 @@ while (my $row = $sth->fetchrow_hashref) {
   $row->{action} =~ s/Date of introduction/Introduced/;
   $row->{action} =~ s/Referred to (the )?//;
   $row->{action} =~ s/ Committee$//;
-  push @{$stacks{$row->{action}}}, $row->{number};
+  unless (defined $dates->{ $row->{date} }) {
+    if ($prev_date) {
+      # We've arrived at a new date. Copy/paste the previous date stacks as our starting point
+      $dates->{ $row->{date} }->{stacks} = clone($dates->{$prev_date}->{stacks});
+    }
+  }
+  my $stacks = \$dates->{ $row->{date} }->{stacks};
+  # p $stacks;
+  push @{$$stacks->{ $row->{action} }}, $row->{number};
+  $prev_date = $row->{date};
 }
 
-# p %stacks;
-# my @keys = keys %stacks;
-# p @keys;
+p $dates;
 
 # Read starting positions from the local hard-coded JSON file
 my $nextX;
@@ -67,51 +76,62 @@ foreach my $committee (@$json_committees) {
 }
 # p $committees;
 
-# Now that we have the ordered stacks, let's calculate xFrom, xTo, yFrom, yTo
-my $bills;
-foreach my $committee (keys %stacks) {
-  unless ($committees->{$committee}) {
-    say "uhh... unknown committee $committee";
-  }
-  foreach my $bill (@{$stacks{$committee}}) {
-    # say "$committee $bill";
-    if ($committee eq "Introduced") {
-      $bills->{$bill}->{xFrom} = $committees->{$committee}->{nextX};
-      $bills->{$bill}->{yFrom} = $committees->{$committee}->{nextY};
-      $bills->{$bill}->{rowFrom} = $committees->{$committee}->{row};
-    } else {
-      $bills->{$bill}->{xTo} = $committees->{$committee}->{nextX};
-      $bills->{$bill}->{yTo} = $committees->{$committee}->{nextY};
-      $bills->{$bill}->{rowTo} = $committees->{$committee}->{row};
+my $bills_previous_location;
+# Now that we have the bill and committee info, calculate movements (xFrom, xTo, yFrom, yTo)
+foreach my $date (keys %$dates) {
+  my $stacks = $dates->{$date}->{stacks};
+  my $movements;
+
+  foreach my $committee (keys %$stacks) {
+    unless ($committees->{$committee}) {
+      say "uhh... unknown committee $committee";
     }
-    $committees->{$committee}->{nextX} += 5;
-    if ($committees->{$committee}->{nextX} > $committees->{$committee}->{rollover_x}) {
-      # Start a new row
-      $committees->{$committee}->{nextX} = $committees->{$committee}->{original_x};
-      $committees->{$committee}->{nextY} += 6;
-      $committees->{$committee}->{row} += 1;
-      say "committee $committee is now on row " . $committees->{$committee}->{row};
+    foreach my $bill (@{$stacks->{$committee}}) {
+      # say "$committee $bill";
+      if ($committee eq "Introduced") {
+        $movements->{$bill}->{xFrom} = 0;
+        $movements->{$bill}->{yFrom} = 0;
+        $movements->{$bill}->{xTo} = $committees->{$committee}->{nextX};
+        $movements->{$bill}->{yTo} = $committees->{$committee}->{nextY};
+        $movements->{$bill}->{rowFrom} = $committees->{$committee}->{row};
+      } else {
+        $movements->{$bill}->{xFrom} = $bills_previous_location->{$bill}->{x};
+        $movements->{$bill}->{yFrom} = $bills_previous_location->{$bill}->{y};
+        $movements->{$bill}->{xTo} = $committees->{$committee}->{nextX};
+        $movements->{$bill}->{yTo} = $committees->{$committee}->{nextY};
+        $movements->{$bill}->{rowTo} = $committees->{$committee}->{row};
+      }
+      $bills_previous_location->{$bill} = {
+        x => $committees->{$committee}->{nextX},
+        y => $committees->{$committee}->{nextY},
+      };
+      $committees->{$committee}->{nextX} += 5;
+      if ($committees->{$committee}->{nextX} > $committees->{$committee}->{rollover_x}) {
+        # Start a new row
+        $committees->{$committee}->{nextX} = $committees->{$committee}->{original_x};
+        $committees->{$committee}->{nextY} += 6;
+        $committees->{$committee}->{row} += 1;
+        say "committee $committee is now on row " . $committees->{$committee}->{row};
+      }
     }
   }
+  $dates->{$date}->{movements} = $movements;
 }
 
-# Cap to first 1200 pixels for now
-foreach my $number (keys %$bills) {
-  if (
-    (not defined $bills->{$number}->{xFrom}) ||
-    (not defined $bills->{$number}->{xTo}) ||
-    $bills->{$number}->{rowFrom} > 3
-  ) {
-    delete $bills->{$number};
-  }
-}
-
+# Cap to first 3 rows of Introduced for now
+# foreach my $number (keys %$bills) {
+#   if (
+#     (not defined $bills->{$number}->{xFrom}) ||
+#     (not defined $bills->{$number}->{xTo}) ||
+#     $bills->{$number}->{rowFrom} > 3
+#   ) {
+#     delete $bills->{$number};
+#   }
+# }
 
 {
-  say "Writing $bills_json_file...";
-  open my $fh, ">", $bills_json_file;
+  say "Writing $dates_json_file...";
+  open my $fh, ">", $dates_json_file;
   # TODO canonical() sorts ASCII, not by the numeric part of the bill number 
-  print $fh JSON::XS->new->pretty(1)->canonical(1)->encode($bills);
+  print $fh JSON::XS->new->pretty(1)->canonical(1)->encode($dates);
 }
-# p $bills;
-# p $committees;
