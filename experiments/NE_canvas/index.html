@@ -25,42 +25,14 @@
   <canvas id="billCanvas"       width=1200 height=300></canvas>
 
   <script type="text/javascript">
-    async function loadCommittees() {
-      var resp = fetch("./committees.json");
-      var r = resp.json();
-      return r;
+    setupGlobals(document);
+    async function loadJSONs() {
+      const allPromise = Promise.all([
+        fetch("./committees.json").then(resp => resp.json()),
+        fetch("./bills.json").then(resp => resp.json()),
+      ]).then(resp => play(resp[0], resp[1]));
     }
-    async function loadBills() {
-      var resp = await fetch("./bills.json");
-      var r = await resp.json();
-      return r;
-    }
-    var committees = loadCommittees();
-    var bills = loadBills();
-    //committees = committees[0];
-    console.log("before");
-    console.log(committees);
-    console.log(bills);
-    console.log("after");
-
-    // Starting point: https://css-tricks.com/easing-animations-in-canvas/
-    const backgroundCanvas = document.getElementById('backgroundCanvas');
-    const canvasWidth = backgroundCanvas.width;
-    const canvasHeight = backgroundCanvas.height;
-    console.log("width " + canvasWidth + " height " + canvasHeight)
-    const backgroundCtx = backgroundCanvas.getContext('2d');
-    const billCanvas = document.getElementById('billCanvas');
-    const billCtx = billCanvas.getContext('2d');
-    backgroundCtx.font = "14px sanserif";
-    backgroundCtx.fillText("Introduced", 5, 20);
-    const billWidth = 4;
-
-    for (let c of committees) {
-      console.log(c.name);
-      backgroundCtx.fillText(c.name, c.x, c.y);
-    }
-
-    window.onload = play;
+    loadJSONs();
   </script> 
 
   <p id="spacer"></p>

@@ -1,3 +1,23 @@
+var backgroundCanvas, billCanvas;
+var backgroundCtx, billCtx;
+var committees, bills;
+var canvasWidth, canvasHeight;
+var billWidth = 4;
+
+function setupGlobals(document) {
+  // Starting point: https://css-tricks.com/easing-animations-in-canvas/
+  backgroundCanvas = document.getElementById('backgroundCanvas');
+  console.log(backgroundCanvas);
+
+  canvasWidth = backgroundCanvas.width;
+  canvasHeight = backgroundCanvas.height;
+  console.log("width " + canvasWidth + " height " + canvasHeight)
+  backgroundCtx = backgroundCanvas.getContext('2d');
+  billCanvas = document.getElementById('billCanvas');
+  billCtx = billCanvas.getContext('2d');
+  backgroundCtx.font = "14px sanserif";
+  backgroundCtx.fillText("Introduced", 5, 20);
+}
 
 // Robert Penner’s "Flash easing functions"
 function getEase(currentProgress, start, distance, steps, power) {
@@ -37,11 +57,15 @@ function addBill(params) {
 
 function drawCanvas() {
   billCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-  //billCtx.fillStyle = 'rgb(255,255,255)';
-  //billCtx.fillRect(0, 0, billCanvas.width, billCanvas.height);
+  // billCtx.fillStyle = 'rgb(255,255,255)';
+  // billCtx.fillRect(0, 0, billCanvas.width, billCanvas.height);
 }
 
-function play() {
+function play(committees, bills) {
+  for (c of committees) {
+    backgroundCtx.fillText(c.name, c.x, c.y);
+  }
+
   drawCanvas();
   addBill({
     name: 'LB1',
@@ -61,4 +85,17 @@ function play() {
     yFrom: 50,
     yTo: 200
   });
+  console.log(typeof(bills));
+  console.log(bills);
+  for (const [number, bill] of Object.entries(bills)) {
+    addBill({
+      name: number,
+      frame: 0,
+      frames: 100,
+      xFrom: bill.xFrom,
+      xTo: bill.xTo,
+      yFrom: bill.yFrom,
+      yTo: bill.yTo
+    });
+  }
 }
