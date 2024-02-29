@@ -1,22 +1,22 @@
 [
-  {"name":"Introduced", "x": 10, "y": 20},
+  {"name":"Introduced", "x": 10, "y": 20, "rollover_x": 1185},
 
-  {"name":"Agriculture", "x": 10, "y": 50},
-  {"name":"Appropriations", "x": 10, "y": 80},
-  {"name":"Banking, Commerce and Insurance", "x": 10, "y": 110},
-  {"name":"Business and Labor", "x": 10, "y": 140},
-  {"name":"Education", "x": 10, "y": 170},
-  {"name":"Executive Board", "x": 10, "y": 200},
+  {"name":"Agriculture", "x": 10, "y": 60, "rollover_x": 380},
+  {"name":"Appropriations", "x": 10, "y": 90, "rollover_x": 380},
+  {"name":"Banking, Commerce and Insurance", "x": 10, "y": 120, "rollover_x": 380},
+  {"name":"Business and Labor", "x": 10, "y": 150, "rollover_x": 380},
+  {"name":"Education", "x": 10, "y": 180, "rollover_x": 380},
+  {"name":"Executive Board", "x": 10, "y": 210, "rollover_x": 380},
 
-  {"name":"General Affairs", "x": 400, "y": 50},
-  {"name":"Government, Military and Veterans Affairs", "x": 400, "y": 80},
-  {"name":"Health and Human Services", "x": 400, "y": 110},
-  {"name":"Judiciary", "x": 400, "y": 140},
-  {"name":"Natural Resources", "x": 400, "y": 170},
+  {"name":"General Affairs", "x": 400, "y": 60, "rollover_x": 780},
+  {"name":"Government, Military and Veterans Affairs", "x": 400, "y": 90, "rollover_x": 780},
+  {"name":"Health and Human Services", "x": 400, "y": 120, "rollover_x": 780},
+  {"name":"Judiciary", "x": 400, "y": 150, "rollover_x": 780},
+  {"name":"Natural Resources", "x": 400, "y": 180, "rollover_x": 780},
 
-  {"name":"Nebraska Retirement Systems", "x": 800, "y": 50},
-  {"name":"Reference", "x": 800, "y": 80},
-  {"name":"Revenue", "x": 800, "y": 110},
-  {"name":"Transportation and Telecommunications", "x": 800, "y": 140},
-  {"name":"Urban Affairs", "x": 800, "y": 170}
+  {"name":"Nebraska Retirement Systems", "x": 800, "y": 60, "rollover_x": 1185},
+  {"name":"Reference", "x": 800, "y": 90, "rollover_x": 1185},
+  {"name":"Revenue", "x": 800, "y": 120, "rollover_x": 1185},
+  {"name":"Transportation and Telecommunications", "x": 800, "y": 150, "rollover_x": 1185},
+  {"name":"Urban Affairs", "x": 800, "y": 180, "rollover_x": 1185}
 ]

@@ -58,8 +58,11 @@ my $committees = {};
 foreach my $committee (@$json_committees) {
   # say $committee->{name};
   $committees->{$committee->{name}} = {
-    nextX => $committee->{x},
-    nextY => $committee->{y} + 6,  # 10 to drop below the text
+    nextX      => $committee->{x},
+    original_x => $committee->{x},
+    rollover_x => $committee->{rollover_x},
+    nextY      => $committee->{y} + 6,  # drop the bill boxes below the text
+    row        => 1,
   };
 }
 # p $committees;
@@ -75,11 +78,20 @@ foreach my $committee (keys %stacks) {
     if ($committee eq "Introduced") {
       $bills->{$bill}->{xFrom} = $committees->{$committee}->{nextX};
       $bills->{$bill}->{yFrom} = $committees->{$committee}->{nextY};
+      $bills->{$bill}->{rowFrom} = $committees->{$committee}->{row};
     } else {
       $bills->{$bill}->{xTo} = $committees->{$committee}->{nextX};
       $bills->{$bill}->{yTo} = $committees->{$committee}->{nextY};
+      $bills->{$bill}->{rowTo} = $committees->{$committee}->{row};
     }
     $committees->{$committee}->{nextX} += 5;
+    if ($committees->{$committee}->{nextX} > $committees->{$committee}->{rollover_x}) {
+      # Start a new row
+      $committees->{$committee}->{nextX} = $committees->{$committee}->{original_x};
+      $committees->{$committee}->{nextY} += 6;
+      $committees->{$committee}->{row} += 1;
+      say "committee $committee is now on row " . $committees->{$committee}->{row};
+    }
   }
 }
 
@@ -88,8 +100,7 @@ foreach my $number (keys %$bills) {
   if (
     (not defined $bills->{$number}->{xFrom}) ||
     (not defined $bills->{$number}->{xTo}) ||
-    $bills->{$number}->{xFrom} > 1200 ||
-    $bills->{$number}->{xTo} > 1200
+    $bills->{$number}->{rowFrom} > 3
   ) {
     delete $bills->{$number};
   }
