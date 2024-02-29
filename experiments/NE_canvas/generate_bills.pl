@@ -59,7 +59,7 @@ foreach my $committee (@$json_committees) {
   # say $committee->{name};
   $committees->{$committee->{name}} = {
     nextX => $committee->{x},
-    nextY => $committee->{y} + 10,  # 10 to drop below the text
+    nextY => $committee->{y} + 6,  # 10 to drop below the text
   };
 }
 # p $committees;
@@ -67,6 +67,9 @@ foreach my $committee (@$json_committees) {
 # Now that we have the ordered stacks, let's calculate xFrom, xTo, yFrom, yTo
 my $bills;
 foreach my $committee (keys %stacks) {
+  unless ($committees->{$committee}) {
+    say "uhh... unknown committee $committee";
+  }
   foreach my $bill (@{$stacks{$committee}}) {
     # say "$committee $bill";
     if ($committee eq "Introduced") {
