@@ -16,7 +16,7 @@ function setupGlobals(document) {
   billCanvas = document.getElementById('billCanvas');
   billCtx = billCanvas.getContext('2d');
   backgroundCtx.font = "14px sanserif";
-  backgroundCtx.fillText("Introduced", 5, 20);
+  // backgroundCtx.fillText("Introduced", 5, 20);
 }
 
 // Robert Penner’s "Flash easing functions"
@@ -87,6 +87,7 @@ function play(committees, bills) {
   });
   console.log(typeof(bills));
   console.log(bills);
+  var cnt = 0;
   for (const [number, bill] of Object.entries(bills)) {
     addBill({
       name: number,
@@ -97,5 +98,9 @@ function play(committees, bills) {
       yFrom: bill.yFrom,
       yTo: bill.yTo
     });
+    cnt += 1;
+    if (cnt == 20) {
+      break;   // abort, that's enough bills
+    }
   }
 }

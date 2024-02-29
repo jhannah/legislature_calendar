@@ -80,10 +80,24 @@ foreach my $committee (keys %stacks) {
   }
 }
 
+# Cap to first 1200 pixels for now
+foreach my $number (keys %$bills) {
+  if (
+    (not defined $bills->{$number}->{xFrom}) ||
+    (not defined $bills->{$number}->{xTo}) ||
+    $bills->{$number}->{xFrom} > 1200 ||
+    $bills->{$number}->{xTo} > 1200
+  ) {
+    delete $bills->{$number};
+  }
+}
+
+
 {
   say "Writing $bills_json_file...";
   open my $fh, ">", $bills_json_file;
-  print $fh JSON::XS->new->pretty(1)->encode($bills);
+  # TODO canonical() sorts ASCII, not by the numeric part of the bill number 
+  print $fh JSON::XS->new->pretty(1)->canonical(1)->encode($bills);
 }
 # p $bills;
 # p $committees;
