@@ -44,6 +44,7 @@ function getY(params) {
 }
 
 function addBill(params) {
+  var requestID;
   let name = params.name;
   billCtx.fillStyle = "blue";
   billCtx.clearRect(getX(params) -1, getY(params) -1, billWidth + 2, billWidth + 2);
@@ -52,9 +53,10 @@ function addBill(params) {
     params.frame = params.frame + 1;
     //console.log("requesting " + params.name + " frame " + params.frame)
     //console.log("requesting frame " + params.frame)
-    window.requestAnimationFrame(addBill.bind(null, params))
+    requestID = window.requestAnimationFrame(addBill.bind(null, params))
   }
   billCtx.fillRect(getX(params), getY(params), billWidth, billWidth);
+  return requestID;
 }
 
 function drawCanvas() {
@@ -85,13 +87,16 @@ function play(c, d) {
 // https://stackoverflow.com/questions/43082934/how-to-execute-promises-sequentially-passing-the-parameters-from-an-array
 const forEachSeries = async (iterable, action) => {
   for (const x in iterable) {
+    console.log("BEGIN await " + x);
     await action(x);
+    console.log("END await " + x);
   }
 }
 
 function myPromise(date) {
   return new Promise(res => {
     play_date(date);
+    return Promise.resolve();
   });
 }
 
@@ -104,7 +109,7 @@ function play_date(date) {
   for (const number in movements) {
     coords = movements[number];
     // console.log("  " + number + " " + coords.xFrom);
-    addBill({
+    requestID = addBill({
       name: number,
       frame: 0,
       frames: 100,
@@ -119,5 +124,6 @@ function play_date(date) {
     // }
   }
   console.log("all addBill() calls complete");
-  return 1;
+  cancelAnimationFrame(requestID);
+  return Promise.resolve();
 }
